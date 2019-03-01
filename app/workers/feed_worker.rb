@@ -42,8 +42,8 @@ class FeedWorker
         feed = RSS::Parser.parse(rss)
 
         if feed.channel.date > feed_cursor.pub_date
-          logger.info 'Update feed!'
-          logger.info "before count: #{Item.count}"
+          # logger.info 'Update feed!'
+          # logger.info "before count: #{Item.count}"
 
           latest_item = Item.order(pub_date: :desc).first
           feed.items&.each do |item|
@@ -56,7 +56,7 @@ class FeedWorker
           end
           feed_cursor.pub_date = feed.channel.date
           feed_cursor.save
-          logger.info "after count: #{Item.count}"
+          # logger.info "after count: #{Item.count}"
         end
       end
     end

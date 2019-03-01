@@ -4,8 +4,10 @@ one:
   title: MyString
   link: MyString
   description: MyString
+  feed: one
 
 two:
   title: MyString
   link: MyString
   description: MyString
+  feed: two
