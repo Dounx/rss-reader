@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_01_102228) do
+ActiveRecord::Schema.define(version: 2019_03_01_134054) do
 
   create_table "feeds", force: :cascade do |t|
     t.string "title"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 2019_03_01_102228) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "pub_date"
+  end
+
+  create_table "item_states", force: :cascade do |t|
+    t.integer "item_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_states_on_item_id"
+    t.index ["user_id"], name: "index_item_states_on_user_id"
   end
 
   create_table "items", force: :cascade do |t|
