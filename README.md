@@ -10,4 +10,5 @@ It's a graduation project, using for RSS/ATOM Subscripting and reading.
 ## Commands to run
 * bundle install
 * bundle exec sidekiq
+* rails db:migrate
 * rails server
