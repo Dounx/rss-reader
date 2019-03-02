@@ -1,3 +1,7 @@
+=begin
+This worker need a method to find out if a feed should be update.
+=end
+
 require 'rss'
 require 'open-uri'
 
@@ -51,9 +55,9 @@ class FeedWorker
         feed = RSS::Parser.parse(rss)
         # logger.info 'Update feed!'
         # logger.info "before count: #{Item.count}"
-        latest_item = Item.order(pub_date: :desc).first
-        feed.items&.each do |item|
-          if item.date > latest_item.pub_date
+
+        feed.items.each do |item|
+          if feed_cursor.items.find_by(title: item.title).nil?
             feed_cursor.items.create(title: item.title,
                                      link: item.link,
                                      description: item.description,
