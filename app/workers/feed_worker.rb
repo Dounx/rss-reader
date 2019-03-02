@@ -4,14 +4,15 @@ require 'open-uri'
 class FeedWorker
   include Sidekiq::Worker
 
-  def perform(*args)
-    link = args.first
-    feed = Feed.find_by(link: link)
+  def perform(links)
+    links.each do |link|
+      feed = Feed.find_by(link: link)
 
-    if feed
-      update_feed(feed)
-    else
-      create_feed(link)
+      if feed
+        update_feed(feed)
+      else
+        create_feed(link)
+      end
     end
   end
 
