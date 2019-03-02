@@ -6,10 +6,29 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
+Feed.create(
+    title: "IT之家",
+    link: "https://www.ithome.com/rss/",
+    description: "IT之家 - 软媒旗下网站",
+    language: "zh-cn"
+)
+
+User.create(
+    :email                 => "imdounx@gmail.com",
+    :password              => "123456",
+    :password_confirmation => "123456"
+)
+
+Subscription.create(
+    :user_id => User.first.id,
+    :feed_id => Feed.first.id
+)
+
 links = %w(https://www.ithome.com/rss/
-         https://rsshub.app/pediy/topic/android/digest
-         https://rsshub.app/v2ex/topics/latest
-         https://rsshub.app/leetcode/articles
-         https://rsshub.app/bbc/chinese)
+           https://rsshub.app/pediy/topic/android/digest
+           https://rsshub.app/v2ex/topics/latest
+           https://rsshub.app/leetcode/articles
+           https://rsshub.app/bbc/chinese)
 
 FeedWorker.perform_async(links)
