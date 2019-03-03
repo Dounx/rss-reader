@@ -5,8 +5,8 @@ class FeedsController < ApplicationController
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = Feed.all
-    # FeedWorker.perform_async(@feeds.map(&:link))
+    @feeds = current_user.feeds
+    # InitFeedsWorker.perform_async(@feeds.map(&:link))
   end
 
   # GET /feeds/1
@@ -26,15 +26,18 @@ class FeedsController < ApplicationController
   # POST /feeds
   # POST /feeds.json
   def create
-    @feed = Feed.new(feed_params)
+    @feed = Feed.find_or_create_by(link: feed_params[:link])
+    subscription = Subscription.find_by(user_id: current_user.id, feed_id: @feed.id)
 
     respond_to do |format|
-      if @feed.save
-        format.html { redirect_to @feed, notice: 'Feed was successfully created.' }
+      if subscription.nil?
+        Subscription.create(user_id: current_user.id, feed_id: @feed.id)
+        RefreshFeedsWorker.perform_async(@feed.link)
+        format.html { redirect_to @feed, notice: 'The feed will update after a few minutes.' }
         format.json { render :show, status: :created, location: @feed }
       else
         format.html { render :new }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
+        format.json { render json: 'You have subscript this feed!', status: :unprocessable_entity }
       end
     end
   end
@@ -56,7 +59,9 @@ class FeedsController < ApplicationController
   # DELETE /feeds/1
   # DELETE /feeds/1.json
   def destroy
-    @feed.destroy
+    subscription = Subscription.find_by(user_id: current_user.id, feed_id: params[:id])
+    subscription.destroy
+
     respond_to do |format|
       format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
       format.json { head :no_content }

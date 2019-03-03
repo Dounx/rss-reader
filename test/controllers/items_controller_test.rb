@@ -31,18 +31,8 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
-    get edit_item_url(@item)
-    assert_response :success
-  end
-
-  test "should update item" do
-    patch item_url(@item), params: { item: { description: @item.description, link: @item.link, title: @item.title } }
-    assert_redirected_to item_url(@item)
-  end
-
   test "should destroy item" do
-    assert_difference('Item.count', -1) do
+    assert_difference('ItemState.count', -1) do
       delete item_url(@item)
     end
 

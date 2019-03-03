@@ -41,7 +41,7 @@ links = %w(https://www.ithome.com/rss/
            https://rsshub.app/one
            https://rsshub.app/gcores/category/1)
 
-FeedWorker.perform_async(links)
+RefreshFeedsWorker.perform_async(links)
 
 
 

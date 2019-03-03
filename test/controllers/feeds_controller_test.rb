@@ -5,6 +5,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @feed = feeds(:one)
+
     sign_in users(:one)
   end
 
@@ -18,9 +19,10 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  # because of async task, should not test this.
   test "should create feed" do
     assert_difference('Feed.count') do
-      post feeds_url, params: { feed: { description: @feed.description, language: @feed.language, link: @feed.link, title: @feed.title } }
+      post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
     end
     assert_redirected_to feed_url(Feed.last)
   end
@@ -41,7 +43,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy feed" do
-    assert_difference('Feed.count', -1) do
+    assert_difference('Subscription.count', -1) do
       delete feed_url(@feed)
     end
 

@@ -38,6 +38,8 @@ gem 'sqlite3', '~> 1.3.13'
 
 gem 'sidekiq', '~> 5.2.5'
 
+gem "sidekiq-cron", "~> 1.1"
+
 gem 'devise', '~> 4.6.1'
 
 group :development, :test do

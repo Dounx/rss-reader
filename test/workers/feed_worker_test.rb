@@ -10,28 +10,28 @@ class FeedWorkerTest < ActiveSupport::TestCase
 
   test 'should add a feed' do
     assert_difference('Feed.count') do
-      FeedWorker.new.perform(@link)
+      RefreshFeedsWorker.new.perform(@link)
     end
   end
 
   test 'should not add a feed if the feed existed ' do
-    FeedWorker.new.perform(@link)
+    RefreshFeedsWorker.new.perform(@link)
     assert_no_difference('Feed.count') do
-      FeedWorker.new.perform(@link)
+      RefreshFeedsWorker.new.perform(@link)
     end
   end
 
   test 'should add items' do
     last_count = Item.count
-    FeedWorker.new.perform(@link)
+    RefreshFeedsWorker.new.perform(@link)
     assert_not_equal last_count, Item.count
   end
 
 
   test 'should not add items if items exist' do
-    FeedWorker.new.perform(@link)
+    RefreshFeedsWorker.new.perform(@link)
     assert_no_difference('Item.count') do
-      FeedWorker.new.perform(@link)
+      RefreshFeedsWorker.new.perform(@link)
     end
   end
 end

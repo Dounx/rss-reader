@@ -1,0 +1,4 @@
+refresh_feeds:
+  cron: "0 * * * *"
+  class: "RefreshFeedsWorker"
+  queue: default

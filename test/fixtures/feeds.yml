@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  link: MyString
-  description: MyString
-  language: MyString
+  title: MyString1
+  link: MyString1
+  description: MyString1
+  language: MyString1
 
 two:
-  title: MyString
-  link: MyString
-  description: MyString
-  language: MyString
+  title: MyString2
+  link: MyString2
+  description: MyString2
+  language: MyString2
