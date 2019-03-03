@@ -12,7 +12,7 @@ Feed.create(
     link: "https://www.ithome.com/rss/",
     description: "IT之家 - 软媒旗下网站",
     language: "zh-cn",
-    pub_date: DateTime.now
+    modified_at: DateTime.now
 )
 
 User.create(

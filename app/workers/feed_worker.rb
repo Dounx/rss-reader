@@ -39,35 +39,35 @@ class FeedWorker
                                   link: link,
                                   description: feed.channel.description,
                                   language: feed.channel.language,
-                                  pub_date: rss.last_modified)
+                                  modified_at: rss.last_modified)
 
         feed.items.each do |item|
           feed_cursor.items.create(title: item.title,
                                    link: item.link,
                                    description: item.description,
-                                   pub_date: item.date)
+                                   created_at: item.date)
         end
       end
     end
 
     def update_feed(feed_cursor)
-      open(feed_cursor.link, 'If-Modified-Since' => feed_cursor.pub_date.to_s) do |rss|
+      open(feed_cursor.link, 'If-Modified-Since' => feed_cursor.modified_at.to_s) do |rss|
         feed = RSS::Parser.parse(rss)
         # logger.info 'Update feed!'
         # logger.info "before count: #{Item.count}"
         #
         unless feed.nil?
-          last_item = feed_cursor.items.order(pub_date: :desc).first
+          last_item = feed_cursor.items.order(created_at: :desc).first
 
           feed.items.each do |item|
-            if item.date > last_item.pub_date
+            if item.date > last_item.created_at
               feed_cursor.items.create(title: item.title,
                                        link: item.link,
                                        description: item.description,
-                                       pub_date: item.date)
+                                       created_at: item.date)
             end
           end
-          feed_cursor.pub_date = rss.last_modified
+          feed_cursor.modified_at = rss.last_modified
           feed_cursor.save!
         end
 

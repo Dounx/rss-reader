@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_060919) do
     t.string "language"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "modified_at", null: false
+    t.datetime "modified_at"
   end
 
   create_table "item_states", force: :cascade do |t|

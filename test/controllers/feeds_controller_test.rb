@@ -22,7 +22,6 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Feed.count') do
       post feeds_url, params: { feed: { description: @feed.description, language: @feed.language, link: @feed.link, title: @feed.title } }
     end
-
     assert_redirected_to feed_url(Feed.last)
   end
 
