@@ -6,7 +6,7 @@ class FeedsController < ApplicationController
   # GET /feeds.json
   def index
     @feeds = Feed.all
-    FeedWorker.perform_async(@feeds.map(&:link))
+    # FeedWorker.perform_async(@feeds.map(&:link))
   end
 
   # GET /feeds/1

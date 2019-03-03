@@ -11,7 +11,8 @@ Feed.create(
     title: "IT之家",
     link: "https://www.ithome.com/rss/",
     description: "IT之家 - 软媒旗下网站",
-    language: "zh-cn"
+    language: "zh-cn",
+    pub_date: DateTime.now
 )
 
 User.create(
@@ -29,6 +30,15 @@ links = %w(https://www.ithome.com/rss/
            https://rsshub.app/pediy/topic/android/digest
            https://rsshub.app/v2ex/topics/latest
            https://rsshub.app/leetcode/articles
-           https://rsshub.app/bbc/chinese)
+           https://rsshub.app/bbc/chinese
+           https://rsshub.app/geekpark/breakingnews
+           https://rsshub.app/security/pulses
+           https://rsshub.app/donews
+           https://rsshub.app/one
+           https://rsshub.app/gcores/category/1
+           https://rsshub.app/jinritoutiao/keyword/AI)
 
-FeedWorker.perform_async(links)
+links.each do |link|
+  FeedWorker.perform_async(link)
+end
+

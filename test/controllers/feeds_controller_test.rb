@@ -1,8 +1,11 @@
 require 'test_helper'
 
 class FeedsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
     @feed = feeds(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
