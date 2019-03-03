@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+# To reset sidekiq:
+Sidekiq.redis { |conn| conn.flushdb }
+Sidekiq::Stats.new.reset
+
 Feed.create(
     title: "IT之家",
     link: "https://www.ithome.com/rss/",
@@ -32,13 +36,13 @@ links = %w(https://www.ithome.com/rss/
            https://rsshub.app/leetcode/articles
            https://rsshub.app/bbc/chinese
            https://rsshub.app/geekpark/breakingnews
-           https://rsshub.app/security/pulses
+           https://rsshub.app/securit/pulses
            https://rsshub.app/donews
            https://rsshub.app/one
-           https://rsshub.app/gcores/category/1
-           https://rsshub.app/jinritoutiao/keyword/AI)
+           https://rsshub.app/gcores/category/1)
 
-links.each do |link|
-  FeedWorker.perform_async(link)
-end
+FeedWorker.perform_async(links)
+
+
+
 

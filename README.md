@@ -9,6 +9,7 @@ It's a graduation project, using for RSS/ATOM Subscripting and reading.
 
 ## Commands to run
 * bundle install
+* SIDEKIQ_THREADS = 1 (Threads amount depend on your server)
 * bundle exec sidekiq
 * rails db:migrate
 * rails server

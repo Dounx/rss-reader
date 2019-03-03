@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_03_060919) do
+ActiveRecord::Schema.define(version: 2019_03_03_082752) do
 
   create_table "feeds", force: :cascade do |t|
     t.string "title"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_060919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "modified_at"
+    t.index ["link"], name: "index_feeds_on_link"
   end
 
   create_table "item_states", force: :cascade do |t|
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_060919) do
     t.datetime "updated_at", null: false
     t.integer "feed_id"
     t.index ["feed_id"], name: "index_items_on_feed_id"
+    t.index ["link"], name: "index_items_on_link"
   end
 
   create_table "subscriptions", force: :cascade do |t|

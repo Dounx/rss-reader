@@ -11,69 +11,39 @@ class FeedWorker
 
   def perform(*args)
     if args.first.is_a?(String)
-      deal_with_feed(args.first)
+      feed_parser(args.first)
     else
       args.first.each do |link|
-        deal_with_feed(link)
+        feed_parser(link)
       end
     end
   end
 
-
   private
-
-    def deal_with_feed(link)
-      feed = Feed.find_by(link: link)
-      if feed
-        update_feed(feed)
-      else
-        create_feed(link)
-      end
-    end
-
-    def create_feed(link)
-      open(link) do |rss|
-        feed = RSS::Parser.parse(rss)
-
-        feed_cursor = Feed.create(title: feed.channel.title,
-                                  link: link,
-                                  description: feed.channel.description,
-                                  language: feed.channel.language,
-                                  modified_at: rss.last_modified)
-
-        feed.items.each do |item|
-          feed_cursor.items.create(title: item.title,
-                                   link: item.link,
-                                   description: item.description,
-                                   created_at: item.date)
-        end
-      end
-    end
-
-    def update_feed(feed_cursor)
-      open(feed_cursor.link, 'If-Modified-Since' => feed_cursor.modified_at.to_s) do |rss|
-        feed = RSS::Parser.parse(rss)
-        # logger.info 'Update feed!'
-        # logger.info "before count: #{Item.count}"
-        #
-        unless feed.nil?
-          last_item = feed_cursor.items.order(created_at: :desc).first
+    def feed_parser(link)
+      feed_cursor = Feed.find_or_create_by(link: link)
+      begin
+        open(link, 'If-Modified-Since' => feed_cursor.modified_at.to_s) do |rss|
+          feed = RSS::Parser.parse(rss)
+          feed_cursor.update(title: feed.channel.title,
+                             description: feed.channel.description,
+                             language: feed.channel.language,
+                             modified_at: rss.last_modified)
 
           feed.items.each do |item|
-            if item.date > last_item.created_at
-              feed_cursor.items.create(title: item.title,
-                                       link: item.link,
-                                       description: item.description,
-                                       created_at: item.date)
-            end
+            item_cursor = feed_cursor.items.find_by(link: item.link)
+            feed_cursor.items.create(title: item.title,
+                                                   link: item.link,
+                                                   description: item.description,
+                                                   updated_at: item.date) if item_cursor.nil?
           end
-          feed_cursor.modified_at = rss.last_modified
-          feed_cursor.save!
         end
-
-        # feed_cursor.pub_date = feed.channel.date
-        # feed_cursor.save
-        # logger.info "after count: #{Item.count}"
+      rescue OpenURI::HTTPError => ex
+        if ex.message == '304 Not Modified'
+          puts 'Not Modified'
+        else
+          puts ex.message
+        end
       end
     end
 end
