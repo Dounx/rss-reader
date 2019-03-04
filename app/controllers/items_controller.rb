@@ -4,11 +4,10 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = current_user.items
+    @items = current_user.items.order(updated_at: :desc)
   end
 
   # GET /items/1
-  # GET /items/1.json
   def show
   end
 
@@ -17,35 +16,13 @@ class ItemsController < ApplicationController
     @item = Item.new
   end
 
-  # GET /items/1/edit
-  def edit
-  end
-
-  # POST /items
-  # POST /items.json
-  def create
-    @item = Item.new(item_params)
-
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to @item, notice: 'Item was successfully created.' }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /items/1
-  # DELETE /items/1.json
   def destroy
     item_state = ItemState.find_by(user_id: current_user.id, item_id: params[:id])
     item_state.destroy
 
     respond_to do |format|
       format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -53,10 +30,5 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def item_params
-      params.require(:item).permit(:title, :link, :description, :feed_id)
     end
 end

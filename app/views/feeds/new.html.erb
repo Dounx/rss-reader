@@ -1,5 +1,12 @@
-<h1>New Feed</h1>
-
-<%= render 'form', feed: @feed %>
-
-<%= link_to 'Back', feeds_path %>
+<%= form_for @feed, url: {action: 'create'} do |f| %>
+  <fieldset>
+    <legend>Add feed</legend>
+    <div class="field form-group">
+      <%= f.text_field :link, :placeholder => 'Enter RSS url', :class => 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Add", :class => 'btn btn-primary' %>
+      <%= button_to 'Back', feeds_path, :class => 'btn btn-primary' %>
+    </div>
+  </fieldset>
+<% end %>

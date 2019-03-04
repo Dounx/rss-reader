@@ -4,7 +4,7 @@ class FeedsController < ApplicationController
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = current_user.feeds
+    @feeds = current_user.feeds.order(modified_at: :desc, created_at: :desc)
     # InitFeedsWorker.perform_async(@feeds.map(&:link))
   end
 
@@ -33,11 +33,9 @@ class FeedsController < ApplicationController
       if subscription.nil?
         Subscription.create(user_id: current_user.id, feed_id: @feed.id)
         RefreshFeedsWorker.perform_async(@feed.link)
-        format.html { redirect_to @feed, notice: 'The feed will update after a few minutes.' }
-        format.json { render :show, status: :created, location: @feed }
+        format.html { redirect_to feeds_url, notice: 'The feed will update after a few minutes.' }
       else
         format.html { render :new }
-        format.json { render json: 'You have subscript this feed!', status: :unprocessable_entity }
       end
     end
   end
@@ -48,10 +46,8 @@ class FeedsController < ApplicationController
     respond_to do |format|
       if @feed.update(feed_params)
         format.html { redirect_to @feed, notice: 'Feed was successfully updated.' }
-        format.json { render :show, status: :ok, location: @feed }
       else
         format.html { render :edit }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,7 +60,6 @@ class FeedsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

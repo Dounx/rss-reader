@@ -1,22 +1,14 @@
-<h1>Items</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<p class="lead">
+  <div class="list-group">
     <% @items.each do |item| %>
-      <tr>
-        <td><%= item.title %></td>
-        <td><%= strip_tags(item.description) %></td>
-        <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <%= link_to item_path(item.id), :class => 'list-group-item list-group-item-action flex-column align-items-start' do %>
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1"><%= item.title %></h5>
+          <small><%= time_ago_in_words(item.updated_at) %></small>
+        </div>
+
+        <p class="mb-1"><%= truncate(strip_tags(item.description), :length => 255) %></p>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</p>
