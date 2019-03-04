@@ -2,14 +2,12 @@ class FeedsController < ApplicationController
   before_action :set_feed, only: [:show, :edit, :update, :destroy]
 
   # GET /feeds
-  # GET /feeds.json
   def index
     @feeds = current_user.feeds.order(modified_at: :desc, created_at: :desc)
     # InitFeedsWorker.perform_async(@feeds.map(&:link))
   end
 
   # GET /feeds/1
-  # GET /feeds/1.json
   def show
     @items = Feed.find(params[:id]).items
   end
@@ -24,7 +22,6 @@ class FeedsController < ApplicationController
   end
 
   # POST /feeds
-  # POST /feeds.json
   def create
     @feed = Feed.find_or_create_by(link: feed_params[:link])
     subscription = Subscription.find_by(user_id: current_user.id, feed_id: @feed.id)
@@ -41,7 +38,6 @@ class FeedsController < ApplicationController
   end
 
   # PATCH/PUT /feeds/1
-  # PATCH/PUT /feeds/1.json
   def update
     respond_to do |format|
       if @feed.update(feed_params)
@@ -53,7 +49,6 @@ class FeedsController < ApplicationController
   end
 
   # DELETE /feeds/1
-  # DELETE /feeds/1.json
   def destroy
     subscription = Subscription.find_by(user_id: current_user.id, feed_id: params[:id])
     subscription.destroy

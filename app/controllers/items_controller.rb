@@ -2,7 +2,6 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show]
 
   # GET /items
-  # GET /items.json
   def index
     @items = current_user.items.order(updated_at: :desc)
   end
