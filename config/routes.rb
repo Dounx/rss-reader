@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: "site#index"
+  root to: "home#index"
   resources :feeds
   resources :items
 
