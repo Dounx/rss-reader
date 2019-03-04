@@ -25,7 +25,7 @@ def core(link)
       feed_cursor.update(title: feed.channel.title,
                          description: feed.channel.description,
                          language: feed.channel.language,
-                         modified_at: rss.last_modified)
+                         modified_at: rss.last_modified || feed_cursor.updated_at)
 
       feed.items.each do |item|
         item_cursor = feed_cursor.items.find_by(link: item.link)
@@ -41,6 +41,9 @@ def core(link)
   rescue OpenURI::HTTPError => ex
     if ex.message == '304 Not Modified'
       puts 'Not Modified'
+    elsif ex.message == '404 Not Found'
+      puts 'Not Found'
+      feed_cursor.destroy
     else
       puts ex.message
     end

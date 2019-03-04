@@ -3,7 +3,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds
   def index
-    @feeds = current_user.feeds.order(modified_at: :desc, created_at: :desc)
+    @feeds = current_user.feeds.order(modified_at: :desc)
     # InitFeedsWorker.perform_async(@feeds.map(&:link))
   end
 

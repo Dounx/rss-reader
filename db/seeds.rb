@@ -11,24 +11,20 @@
 Sidekiq.redis { |conn| conn.flushdb }
 Sidekiq::Stats.new.reset
 
-Feed.create(
-    title: "IT之家",
-    link: "https://www.ithome.com/rss/",
-    description: "IT之家 - 软媒旗下网站",
-    language: "zh-cn",
-    modified_at: DateTime.now
-)
-
 User.create(
     :email                 => "imdounx@gmail.com",
     :password              => "123456",
     :password_confirmation => "123456"
 )
 
-Subscription.create(
-    :user_id => User.first.id,
-    :feed_id => Feed.first.id
-)
+100.times do
+  User.create(
+      :email                 => "#{SecureRandom.urlsafe_base64}@gmail.com",
+      :password              => "123456",
+      :password_confirmation => "123456"
+  )
+end
+
 
 links = %w(https://www.ithome.com/rss/
            https://rsshub.app/pediy/topic/android/digest
@@ -39,10 +35,24 @@ links = %w(https://www.ithome.com/rss/
            https://rsshub.app/securit/pulses
            https://rsshub.app/donews
            https://rsshub.app/one
-           https://rsshub.app/gcores/category/1)
+           https://rsshub.app/gcores/category/1
+           https://rsshub.app/douban/movie/playing
+           https://rsshub.app/oschina/news
+           https://rsshub.app/sina/discovery/zx
+           https://rsshub.app/3dm/news
+           )
 
-RefreshFeedsWorker.perform_async(links)
+links.each do |link|
+  Feed.create(link: link)
+end
 
+Feed.all.each do |feed|
+  User.all.each do |user|
+    Subscription.create(
+        :user_id => user.id,
+        :feed_id => feed.id
+    )
+  end
+end
 
-
-
+RefreshFeedsWorker.new.perform()

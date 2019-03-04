@@ -6,7 +6,7 @@
       <%= link_to feed_path(feed.id), :class => 'list-group-item list-group-item-action flex-column align-items-start' do %>
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1"><%= feed.title %></h5>
-          <small><%= time_ago_in_words(feed.modified_at || feed.created_at) %></small>
+          <small><%= time_ago_in_words(feed.modified_at) %></small>
         </div>
         <div class="d-flex w-100 justify-content-between">
           <div>
