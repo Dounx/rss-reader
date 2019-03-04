@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show]
-  before_action :authenticate_user!
 
   # GET /items
   # GET /items.json

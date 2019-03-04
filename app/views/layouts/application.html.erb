@@ -20,28 +20,50 @@
         <div class="collapse navbar-collapse" id="navbarColor03">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
+              <a class="nav-link" href="/">Features</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Feeds</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="https://github.com/Dounx/RSSReader">About</a>
             </li>
           </ul>
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
-            </li>
+            <% if current_user.nil? %>
+              <li class="nav-item">
+                <%= link_to "Login", new_user_session_path, :class => 'nav-link' %>
+              </li>
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "Feeds", feeds_path, :class => 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Items", items_path, :class => 'nav-link' %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'nav-link' %>
+              </li>
+            <% end %>
           </ul>
         </div>
       </div>
     </nav>
     <div class="container">
+      <% if flash[:alert] %>
+        <div class="alert alert-dismissible alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <p id="notice" class="mb-0"><%= flash[:alert] %></p>
+        </div>
+      <% elsif flash[:notice] %>
+        <div class="alert alert-dismissible alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <p id="notice" class="mb-0"><%= flash[:notice] %></p>
+        </div>
+      <% end %>
+
       <%= yield %>
+      <% console %>
     </div>
   </body>
 </html>

@@ -1,33 +1,15 @@
-<p id="notice"><%= notice %></p>
+<div class="list-group">
+  <% @feeds.each do |feed| %>
+    <%= link_to feed_path(feed.id), :class => 'list-group-item list-group-item-action flex-column align-items-start' do %>
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1"><%= feed.title %></h5>
+        <small><%= time_ago_in_words(feed.modified_at) %></small>
+      </div>
 
-<h1>Feeds</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Link</th>
-      <th>Description</th>
-      <th>Language</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @feeds.each do |feed| %>
-      <tr>
-        <td><%= feed.title %></td>
-        <td><%= feed.link %></td>
-        <td><%= feed.description %></td>
-        <td><%= feed.language %></td>
-        <td><%= link_to 'Show', feed %></td>
-        <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
-        <td><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <div class="d-flex w-100 justify-content-between">
+        <p class="mb-1"><%= feed.description %></p>
+        <%= button_to "Delete", edit_feed_path(feed.id), :method => :delete, :class => 'btn btn-danger' %>
+      </div>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Feed', new_feed_path %>
+  <% end %>
+</div>
