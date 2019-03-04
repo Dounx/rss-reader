@@ -13,3 +13,6 @@ It's a graduation project, using for RSS/ATOM Subscripting and reading.
 * bundle exec sidekiq
 * rails db:migrate
 * rails server
+
+## License
+* MIT License
