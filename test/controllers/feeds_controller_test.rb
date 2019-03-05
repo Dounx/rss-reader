@@ -5,7 +5,6 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @feed = feeds(:one)
-
     sign_in users(:one)
   end
 
@@ -24,7 +23,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Feed.count') do
       post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
     end
-    assert_redirected_to feed_url(Feed.last)
+    assert_redirected_to feeds_url
   end
 
   test "should show feed" do
