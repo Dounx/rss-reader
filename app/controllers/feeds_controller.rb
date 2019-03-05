@@ -23,17 +23,21 @@ class FeedsController < ApplicationController
 
   # POST /feeds
   def create
-    @feed = Feed.find_or_create_by(link: feed_params[:link])
-    subscription = Subscription.find_by(user_id: current_user.id, feed_id: @feed.id)
-
-    respond_to do |format|
-      if subscription.nil?
-        Subscription.create(user_id: current_user.id, feed_id: @feed.id)
-        RefreshFeedsWorker.perform_async(@feed.link)
-        format.html { redirect_to feeds_url, notice: 'The feed will update after a few minutes.' }
-      else
-        format.html { render :new }
+    @feed = Feed.find_by(link: feed_params[:link])
+    @feed = Feed.new(link: feed_params[:link]) if @feed.nil?
+    if @feed.save
+      subscription = Subscription.find_by(user_id: current_user.id, feed_id: @feed.id)
+      respond_to do |format|
+        if subscription.nil?
+          Subscription.create(user_id: current_user.id, feed_id: @feed.id)
+          RefreshFeedsWorker.perform_async(@feed.link)
+          format.html { redirect_to feeds_url, notice: 'The feed will update after a few minutes.' }
+        else
+          format.html { render :new }
+        end
       end
+    else
+      redirect_to new_feed_url, alert: 'Please add a correct url.'
     end
   end
 
@@ -50,9 +54,7 @@ class FeedsController < ApplicationController
 
   # DELETE /feeds/1
   def destroy
-    subscription = Subscription.find_by(user_id: current_user.id, feed_id: params[:id])
-    subscription.destroy
-
+    Subscription.find_by(feed_id: @feed.id)&.destroy
     respond_to do |format|
       format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
     end
@@ -66,6 +68,6 @@ class FeedsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def feed_params
-      params.require(:feed).permit(:title, :link, :description, :language)
+      params.require(:feed).permit(:link)
     end
 end

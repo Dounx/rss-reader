@@ -5,47 +5,99 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @feed = feeds(:one)
-    sign_in users(:one)
+    @user = users(:one)
   end
 
-  test "should get index" do
+  test "should get index if login" do
+    sign_in @user
     get feeds_url
     assert_response :success
   end
 
-  test "should get new" do
+  test "should show feed if login" do
+    sign_in @user
+    get feed_url(@feed)
+    assert_response :success
+  end
+
+  test "should get new if login" do
+    sign_in @user
     get new_feed_url
     assert_response :success
   end
 
-  # because of async task, should not test this.
-  test "should create feed" do
+  test "should get edit if login" do
+    sign_in @user
+    get edit_feed_url(@feed)
+    assert_response :success
+  end
+
+  test "should create feed if login" do
+    sign_in @user
     assert_difference('Feed.count') do
       post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
     end
     assert_redirected_to feeds_url
   end
 
-  test "should show feed" do
-    get feed_url(@feed)
-    assert_response :success
-  end
-
-  test "should get edit" do
-    get edit_feed_url(@feed)
-    assert_response :success
-  end
-
-  test "should update feed" do
+  test "should update feed if login" do
+    sign_in @user
     patch feed_url(@feed), params: { feed: { description: @feed.description, language: @feed.language, link: @feed.link, title: @feed.title } }
     assert_redirected_to feed_url(@feed)
   end
 
-  test "should destroy feed" do
+  test "should destroy feed if login" do
+    sign_in @user
     assert_difference('Subscription.count', -1) do
       delete feed_url(@feed)
     end
 
     assert_redirected_to feeds_url
+  end
+
+  test "should not get index if not login" do
+    get feeds_url
+    assert_response :found
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not show feed if not login" do
+    get feed_url(@feed)
+    assert_response :found
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not get new if not login" do
+    get new_feed_url
+    assert_response :found
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not get edit if not login" do
+    get edit_feed_url(@feed)
+    assert_response :found
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not create feed if not login" do
+    assert_no_difference('Feed.count') do
+      post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
+      assert_response :found
+    end
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not update feed if not login" do
+    patch feed_url(@feed), params: { feed: { description: @feed.description, language: @feed.language, link: @feed.link, title: @feed.title } }
+    assert_response :found
+    assert_redirected_to new_user_session_path
+  end
+
+  test "should not destroy feed if not login" do
+    assert_no_difference('Subscription.count') do
+      delete feed_url(@feed)
+      assert_response :found
+    end
+    assert_redirected_to new_user_session_path
   end
 end

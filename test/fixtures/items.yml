@@ -2,12 +2,12 @@
 
 one:
   title: MyString
-  link: MyString
+  link: https://googlle.com
   description: MyString
   feed: one
 
 two:
   title: MyString
-  link: MyString
+  link: https://microsoft.com
   description: MyString
   feed: two

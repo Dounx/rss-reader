@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_03_082752) do
+ActiveRecord::Schema.define(version: 2019_03_05_073447) do
 
   create_table "feeds", force: :cascade do |t|
     t.string "title"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_082752) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "modified_at"
-    t.index ["link"], name: "index_feeds_on_link"
+    t.index ["link"], name: "index_feeds_on_link", unique: true
   end
 
   create_table "item_states", force: :cascade do |t|
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_082752) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_item_states_on_item_id"
+    t.index ["user_id", "item_id"], name: "index_item_states_on_user_id_and_item_id", unique: true
     t.index ["user_id"], name: "index_item_states_on_user_id"
   end
 
@@ -40,7 +41,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_082752) do
     t.datetime "updated_at", null: false
     t.integer "feed_id"
     t.index ["feed_id"], name: "index_items_on_feed_id"
-    t.index ["link"], name: "index_items_on_link"
+    t.index ["link"], name: "index_items_on_link", unique: true
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_03_03_082752) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feed_id"], name: "index_subscriptions_on_feed_id"
+    t.index ["user_id", "feed_id"], name: "index_subscriptions_on_user_id_and_feed_id", unique: true
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 

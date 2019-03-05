@@ -36,7 +36,17 @@
               </li>
             <% else %>
               <li class="nav-item">
-                <%= link_to "Feeds", feeds_path, :class => 'nav-link' %>
+                <% if controller_name == 'feeds' %>
+                  <% if action_name == 'new' %>
+                    <%= button_to 'Back', feeds_path, :method => :get, :class => 'btn btn-primary' %>
+                  <% elsif action_name == 'show' %>
+                    <%= button_to "Delete", feed_path(@feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-danger' %>
+                  <% else %>
+                    <%= button_to "New", new_feed_path, :method => :get, :class => 'btn btn-primary float-right' %>
+                  <% end %>
+                <% else %>
+                  <%= link_to "Feeds", feeds_path, :class => 'nav-link' %>
+                <% end %>
               </li>
               <li class="nav-item">
                 <%= link_to "Items", items_path, :class => 'nav-link' %>
@@ -51,7 +61,7 @@
     </nav>
     <div class="container">
       <% if flash[:alert] %>
-        <div class="alert alert-dismissible alert-warning">
+        <div class="alert alert-dismissible alert-danger">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <p id="notice" class="mb-0"><%= flash[:alert] %></p>
         </div>

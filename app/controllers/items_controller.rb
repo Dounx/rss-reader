@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show]
+  before_action :set_item, only: [:show, :destroy]
 
   # GET /items
   def index
@@ -8,11 +8,6 @@ class ItemsController < ApplicationController
 
   # GET /items/1
   def show
-  end
-
-  # GET /items/new
-  def new
-    @item = Item.new
   end
 
   # DELETE /items/1

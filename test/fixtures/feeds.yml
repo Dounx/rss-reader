@@ -2,13 +2,14 @@
 
 one:
   title: MyString1
-  link: MyString1
+  link: https://www.google.com
   description: MyString1
   language: MyString1
-  modified_at : 1/1/2000
+  modified_at: 1/1/2000
 
 two:
   title: MyString2
-  link: MyString2
+  link: https://www.microsoft.com
   description: MyString2
   language: MyString2
+  modified_at: 1/1/2000
