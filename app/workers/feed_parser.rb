@@ -22,10 +22,6 @@ def core(link)
   begin
     open(link, 'If-Modified-Since' => feed_cursor.modified_at.to_s) do |rss|
       feed = RSS::Parser.parse(rss)
-      feed_cursor.update(title: feed.channel.title,
-                         description: feed.channel.description,
-                         language: feed.channel.language,
-                         modified_at: rss.last_modified || feed_cursor.updated_at)
 
       feed.items.each do |item|
         item_cursor = feed_cursor.items.find_by(link: item.link)
@@ -33,10 +29,14 @@ def core(link)
           item_cursor = feed_cursor.items.create(title: item.title,
                                                  link: item.link,
                                                  description: item.description,
-                                                 updated_at: item.date)
+                                                 created_at: item.date)
           update_item_states(item_cursor)
         end
       end
+      feed_cursor.update(title: feed.channel.title,
+                         description: feed.channel.description,
+                         language: feed.channel.language,
+                         modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at || feed_cursor.created_at)
     end
   rescue OpenURI::HTTPError => ex
     if ex.message == '304 Not Modified'

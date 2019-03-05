@@ -9,7 +9,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1
   def show
-    @items = Feed.find(params[:id]).items
+    @items = Feed.find(params[:id]).items.order(created_at: :desc)
   end
 
   # GET /feeds/new
