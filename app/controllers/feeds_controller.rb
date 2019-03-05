@@ -3,13 +3,13 @@ class FeedsController < ApplicationController
 
   # GET /feeds
   def index
-    @feeds = current_user.feeds.order(modified_at: :desc)
+    @feeds = current_user.feeds.order(modified_at: :desc).page params[:page]
     # InitFeedsWorker.perform_async(@feeds.map(&:link))
   end
 
   # GET /feeds/1
   def show
-    @items = Feed.find(params[:id]).items.order(created_at: :desc)
+    @items = Feed.find(params[:id]).items.order(created_at: :desc).page params[:page]
   end
 
   # GET /feeds/new

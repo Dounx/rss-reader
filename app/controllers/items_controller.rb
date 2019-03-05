@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
 
   # GET /items
   def index
-    @items = current_user.items.order(created_at: :desc)
+    @items = current_user.items.order(created_at: :desc).page params[:page]
   end
 
   # GET /items/1
