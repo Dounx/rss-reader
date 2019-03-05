@@ -10,5 +10,9 @@
         <p class="mb-1"><%= truncate(strip_tags(item.description), :length => 255) %></p>
       <% end %>
     <% end %>
+    <div class="d-flex w-100 justify-content-between">
+      <p class="lead"/>
+      <%= paginate @items %>
+    </div>
   </div>
 </p>
