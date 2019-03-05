@@ -18,9 +18,10 @@ def feed_parser(links)
 end
 
 def core(link)
+
   feed_cursor = Feed.find_or_create_by(link: link)
   begin
-    open(link, 'If-Modified-Since' => feed_cursor.modified_at.to_s) do |rss|
+    open(link, 'If-Modified-Since' => feed_cursor.modified_at.to_s, :allow_redirections => :all) do |rss|
       feed = RSS::Parser.parse(rss)
 
       feed.items.each do |item|
@@ -37,6 +38,7 @@ def core(link)
                          description: feed.channel.description,
                          language: feed.channel.language,
                          modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at || feed_cursor.created_at)
+      feed_cursor.destroy if feed_cursor.items.count == 0
     end
   rescue OpenURI::HTTPError => ex
     if ex.message == '304 Not Modified'
@@ -47,6 +49,8 @@ def core(link)
     else
       puts ex.message
     end
+  rescue => ex
+    puts ex.message
   end
 end
 
