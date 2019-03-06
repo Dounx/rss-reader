@@ -1,8 +1,8 @@
-<p class="lead">
-  <h2><%= @item.title %></h2>
-  <p><%= sanitize(@item.description) %></p>
-  <div class="d-flex w-100 justify-content-between">
-    <%= button_to 'Go to the site', @item.link, :method => :get, :class => 'btn btn-primary' %>
-    <%= button_to 'Back', :back, :method => :get, :class => 'btn btn-primary' %>
-  </div>
-</p>
+<h2 class="text-center"><%= @item.title %></h2>
+<p class="lead text-center"><%= @item.created_at.localtime %></p>
+<p><%= sanitize(@item.description) %></p>
+<div class="d-flex w-100 justify-content-between">
+  <%= button_to 'Go to the site', @item.link, :method => :get, :class => 'btn btn-primary' %>
+  <%= button_to 'Back', :back, :method => :get, :class => 'btn btn-primary' %>
+</div>
+

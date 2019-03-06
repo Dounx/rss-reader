@@ -10,67 +10,9 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="/">RSSReader</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarColor03">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="https://github.com/Dounx/RSSReader">About</a>
-            </li>
-          </ul>
-          <ul class="navbar-nav">
-            <% if current_user.nil? %>
-              <li class="nav-item">
-                <%= link_to "Login", new_user_session_path, :class => 'nav-link' %>
-              </li>
-            <% else %>
-              <li class="nav-item">
-                <% if controller_name == 'feeds' %>
-                  <% if action_name == 'new' %>
-                    <%= button_to 'Back', feeds_path, :method => :get, :class => 'btn btn-primary' %>
-                  <% elsif action_name == 'show' %>
-                    <%= button_to "Delete", feed_path(@feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-danger' %>
-                  <% else %>
-                    <%= button_to "New", new_feed_path, :method => :get, :class => 'btn btn-primary float-right' %>
-                  <% end %>
-                <% else %>
-                  <%= link_to "Feeds", feeds_path, :class => 'nav-link' %>
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "Items", items_path, :class => 'nav-link' %>
-              </li>
-              <li class="nav-item">
-                <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'nav-link' %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="container">
-      <% if flash[:alert] %>
-        <div class="alert alert-dismissible alert-danger">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <p id="notice" class="mb-0"><%= flash[:alert] %></p>
-        </div>
-      <% elsif flash[:notice] %>
-        <div class="alert alert-dismissible alert-success">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <p id="notice" class="mb-0"><%= flash[:notice] %></p>
-        </div>
-      <% end %>
+    <%= render 'layouts/horizontal_navbar' %>
+    <div class="container mt-5">
+      <%= render 'layouts/alert' %>
       <%= yield %>
     </div>
   </body>

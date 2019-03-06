@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand navbar-light bg-light flex-column fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">RSSReader</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/">Feeds List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/Dounx/RSSReader">About</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <% if current_user.nil? %>
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, :class => 'nav-link' %>
+          </li>
+        <% else %>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          </form>
+          <li class="nav-item">
+            <% if controller_name == 'feeds' %>
+              <% if action_name == 'new' %>
+                <%= button_to 'Back', feeds_path, :method => :get, :class => 'btn btn-primary' %>
+              <% elsif action_name == 'show' %>
+                <%= button_to "Delete", feed_path(@feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-danger' %>
+              <% else %>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-feed" >Add</button>
+                <%= render 'feeds/new_feed_modal' %>
+              <% end %>
+            <% else %>
+              <%= link_to "Feeds", feeds_path, :class => 'nav-link' %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <% if controller_name == 'items' && action_name == 'show' %>
+              <%= button_to "Delete", item_path(@item.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-danger' %>
+            <% else %>
+              <%= link_to "Items", items_path, :class => 'nav-link' %>
+            <% end %>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %></a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Your profile</a>
+              <a class="dropdown-item" href="#">Your Feeds</a>
+              <a class="dropdown-item" href="#">Your Items</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Help</a>
+              <a class="dropdown-item" href="#">Settings</a>
+              <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'dropdown-item' %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
+<br/>

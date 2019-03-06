@@ -3,6 +3,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds
   def index
+    @feed = Feed.new
     @feeds = current_user.feeds.order(modified_at: :desc).page params[:page]
     # InitFeedsWorker.perform_async(@feeds.map(&:link))
   end
@@ -19,6 +20,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1/edit
   def edit
+
   end
 
   # POST /feeds

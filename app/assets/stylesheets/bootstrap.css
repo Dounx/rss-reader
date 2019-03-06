@@ -10789,3 +10789,7 @@ table-primary, table-secondary, table-success, table-info, table-warning, table-
 .list-group {
     font-size: 0.875em;
 }
+
+.modal-backdrop {
+     z-index: 0;
+}

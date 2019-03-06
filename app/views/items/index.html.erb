@@ -1,18 +1,1 @@
-<p class="lead">
-  <div class="list-group">
-    <% @items.each do |item| %>
-      <%= link_to item_path(item.id), :class => 'list-group-item list-group-item-action flex-column align-items-start' do %>
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1"><%= item.title %></h5>
-          <small><%= time_ago_in_words(item.created_at) %></small>
-        </div>
-
-        <p class="mb-1"><%= truncate(strip_tags(item.description), :length => 255) %></p>
-      <% end %>
-    <% end %>
-    <div class="d-flex w-100 justify-content-between">
-      <p class="lead"/>
-      <%= paginate @items %>
-    </div>
-  </div>
-</p>
+<%= render 'items_list' %>

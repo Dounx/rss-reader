@@ -1,0 +1,21 @@
+<div class="modal mt-5" id="add-feed">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add a feed</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_for @feed, url: {action: 'create'} do |f| %>
+        <div class="modal-body">
+            <%= f.text_field :link, :placeholder => 'http(s)://example.com/rss', :class => 'form-control' %>
+        </div>
+        <div class="modal-footer">
+          <%= f.submit "Add", :class => 'btn btn-primary' %>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
