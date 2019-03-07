@@ -26,24 +26,12 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit if login" do
-    sign_in @user
-    get edit_feed_url(@feed)
-    assert_response :success
-  end
-
   test "should create feed if login" do
     sign_in @user
     assert_difference('Feed.count') do
       post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
     end
     assert_redirected_to feeds_url
-  end
-
-  test "should update feed if login" do
-    sign_in @user
-    patch feed_url(@feed), params: { feed: { description: @feed.description, language: @feed.language, link: @feed.link, title: @feed.title } }
-    assert_redirected_to feed_url(@feed)
   end
 
   test "should destroy feed if login" do
@@ -87,11 +75,6 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "should not update feed if not login" do
-    patch feed_url(@feed), params: { feed: { description: @feed.description, language: @feed.language, link: @feed.link, title: @feed.title } }
-    assert_response :found
-    assert_redirected_to new_user_session_path
-  end
 
   test "should not destroy feed if not login" do
     assert_no_difference('Subscription.count') do

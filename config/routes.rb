@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :feeds
   resources :items, only: [:index, :show, :destroy]
   resources :comments, only: [:show, :create, :destroy]
+  get '/search', to: 'search#index'
 
   devise_for :users, controllers: { sessions:'users/sessions' }, path: '', path_names: { sign_in: 'login', sign_out: 'logout' }
   require 'sidekiq/web'

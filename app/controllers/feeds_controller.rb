@@ -1,5 +1,5 @@
 class FeedsController < ApplicationController
-  before_action :set_feed, only: [:show, :edit, :update, :destroy]
+  before_action :set_feed, only: [:show, :update, :destroy]
 
   # GET /feeds
   def index
@@ -15,11 +15,6 @@ class FeedsController < ApplicationController
   # GET /feeds/new
   def new
     @feed = Feed.new
-  end
-
-  # GET /feeds/1/edit
-  def edit
-
   end
 
   # POST /feeds
@@ -41,17 +36,6 @@ class FeedsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /feeds/1
-  def update
-    respond_to do |format|
-      if @feed.update(feed_params)
-        format.html { redirect_to @feed, notice: 'Feed was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
-    end
-  end
-
   # DELETE /feeds/1
   def destroy
     Subscription.find_by(feed_id: @feed.id)&.destroy
@@ -67,7 +51,6 @@ class FeedsController < ApplicationController
       @feed = Feed.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def feed_params
       params.require(:feed).permit(:link)
     end

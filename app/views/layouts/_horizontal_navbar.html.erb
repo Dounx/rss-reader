@@ -26,9 +26,10 @@
             <%= link_to "Login", new_user_session_path, :class => 'nav-link' %>
           </li>
         <% else %>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          </form>
+          <%= form_tag("/search", method: "get", :class => 'form-inline my-2 my-lg-0') do %>
+            <%= text_field_tag(:q) %>
+            <%= submit_tag("Search", :class => 'btn nav-link') %>
+          <% end %>
           <li class="nav-item">
             <% if controller_name == 'feeds' %>
               <% if action_name == 'new' %>
