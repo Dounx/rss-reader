@@ -1,0 +1,20 @@
+<h1>Comments:</h1>
+<% @comments.each do |comment| %>
+  <div class="card mt-2">
+    <h6 class="card-header"><%= comment.user.email %></h6>
+    <div class="card-body">
+      <h6 class="card-subtitle text-muted">said:</h6>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= comment.content %></p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <%= time_ago_in_words(comment.created_at) %>
+      <% if comment.user == current_user %>
+        <%= button_to "Delete", comment_path(comment), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'comments/comment_add' %>

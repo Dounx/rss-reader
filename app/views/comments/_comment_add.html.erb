@@ -1,0 +1,12 @@
+<div class="mt-2">
+  <%= form_with(model: @comment, local: true) do |form| %>
+    <%= form.text_area :content, :class => 'form-control-plaintext border', :rows => '4' %>
+    <%= hidden_field_tag :user_id, current_user.id.to_s %>
+    <%= hidden_field_tag :item_id, @item.id.to_s %>
+    <div class="d-flex justify-content-end mt-2">
+      <div class="actions">
+        <%= form.submit :class => 'btn btn-outline-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -8,6 +8,8 @@ class ItemsController < ApplicationController
 
   # GET /items/1
   def show
+    @comments = @item.comments
+    @comment = Comment.new
   end
 
   # DELETE /items/1
