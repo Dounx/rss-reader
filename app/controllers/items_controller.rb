@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
 
   # GET /items/1
   def show
-    @comments = @item.comments
+    @comments = @item.comments.order(created_at: :desc).page params[:page]
     @comment = Comment.new
   end
 

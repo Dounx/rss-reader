@@ -16,5 +16,9 @@
     </div>
   </div>
 <% end %>
+<div class="d-flex w-100 justify-content-between">
+  <p class="lead"/>
+  <%= paginate @comments %>
+</div>
 
 <%= render 'comments/comment_add' %>
