@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_064105) do
+ActiveRecord::Schema.define(version: 2019_03_07_102204) do
 
   create_table "comments", force: :cascade do |t|
     t.text "content"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 2019_03_07_064105) do
     t.integer "feed_id"
     t.index ["feed_id"], name: "index_items_on_feed_id"
     t.index ["link"], name: "index_items_on_link", unique: true
+  end
+
+  create_table "recommended_feeds", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "subscriptions", force: :cascade do |t|

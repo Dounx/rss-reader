@@ -1,0 +1,2 @@
+class RecommendedFeed < ApplicationRecord
+end

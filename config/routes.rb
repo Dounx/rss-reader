@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :recommended_feeds
   root to: "home#index"
   resources :feeds
   resources :items, only: [:index, :show, :destroy]
