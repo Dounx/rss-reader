@@ -1,6 +1,5 @@
 =begin
 All this tests need network connection!
-=end
 
 require 'test_helper'
 class FeedWorkerTest < ActiveSupport::TestCase
@@ -35,3 +34,4 @@ class FeedWorkerTest < ActiveSupport::TestCase
     end
   end
 end
+=end

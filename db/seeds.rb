@@ -55,4 +55,4 @@ Feed.all.each do |feed|
   end
 end
 
-RefreshFeedsWorker.new.perform()
+RefreshFeedsWorker.perform_async

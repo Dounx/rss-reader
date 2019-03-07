@@ -1,6 +1,6 @@
 <div class="list-group">
   <% @feeds.each do |feed| %>
-    <% unless feed.modified_at.nil? %>
+    <% if feed.modified_at %>
       <%= link_to feed_path(feed.id), :class => 'list-group-item list-group-item-action flex-column align-items-start' do %>
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1"><%= feed.title %></h5>
@@ -14,7 +14,7 @@
         </div>
       <% end %>
     <% else %>
-      <%= link_to feed_path(feed.id), :class => 'list-group-item list-group-item-action flex-column align-items-start alert-danger' do %>
+      <%= link_to feed_path(feed.id), :class => 'list-group-item list-group-item-action flex-column align-items-start alert-secondary' do %>
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1"><%= feed.link %></h5>
           <small><%= time_ago_in_words(feed.created_at) %></small>
