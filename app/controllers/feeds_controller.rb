@@ -3,7 +3,6 @@ class FeedsController < ApplicationController
 
   # GET /feeds
   def index
-    @feed = Feed.new
     @feeds = current_user.feeds.order(modified_at: :desc).page params[:page]
   end
 
@@ -26,13 +25,13 @@ class FeedsController < ApplicationController
         if subscription.nil?
           Subscription.create(user_id: current_user.id, feed_id: @feed.id)
           AddFeedWorker.perform_async(@feed.link)
-          format.html { redirect_to feeds_url, notice: 'The feed will update after a few minutes.' }
+          format.html { redirect_to user_url(current_user), notice: 'The feed will update after a few minutes.' }
         else
-          format.html { redirect_to feeds_url, alert: 'Please add a different feed.'  }
+          format.html { redirect_to user_url(current_user), alert: 'Please add a different feed.'  }
         end
       end
     else
-      redirect_to feeds_url, alert: 'Please add a correct url.'
+      redirect_to user_url(current_user), alert: 'Please add a correct url.'
     end
   end
 
@@ -40,7 +39,7 @@ class FeedsController < ApplicationController
   def destroy
     Subscription.find_by(feed_id: @feed.id)&.destroy
     respond_to do |format|
-      format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
+      format.html { redirect_to user_url(current_user), notice: 'Feed was successfully destroyed.' }
     end
     CleanFeedsWorker.perform_async
   end

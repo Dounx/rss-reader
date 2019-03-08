@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <%= form_for @feed, url: {action: 'create'} do |f| %>
+      <%= form_for @feed, url: {controller: 'feeds', action: 'create'} do |f| %>
         <div class="modal-body">
             <%= f.text_field :link, :placeholder => 'http(s)://example.com/rss', :class => 'form-control' %>
         </div>

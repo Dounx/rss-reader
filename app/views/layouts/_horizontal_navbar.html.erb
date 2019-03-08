@@ -28,15 +28,9 @@
             <%= submit_tag("Search", :class => 'btn nav-link') %>
           <% end %>
           <li class="nav-item">
-            <% if controller_name == 'feeds' %>
-              <% if action_name == 'new' %>
-                <%= button_to 'Back', feeds_path, :method => :get, :class => 'btn btn-primary' %>
-              <% elsif action_name == 'show' %>
-                <%= button_to "Delete", feed_path(@feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-danger' %>
-              <% else %>
+            <% if controller_name == 'users' %>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-feed" >Add</button>
                 <%= render 'feeds/new_feed_modal' %>
-              <% end %>
             <% else %>
               <%= link_to "Feeds", feeds_path, :class => 'nav-link' %>
             <% end %>
@@ -51,7 +45,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %></a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Your profile</a>
+              <%= link_to 'Your profile', user_path(current_user), :class => 'dropdown-item' %>
               <a class="dropdown-item" href="/feeds">Your Feeds</a>
               <a class="dropdown-item" href="/items">Your Items</a>
               <div class="dropdown-divider"></div>

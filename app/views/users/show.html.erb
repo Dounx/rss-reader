@@ -1,0 +1,50 @@
+<h2>Your Subscriptions:</h2>
+<% @feeds.in_groups_of(3) do |row| %>
+  <div class="row mb-4">
+    <% row.each_with_index do |feed, index| %>
+      <% if index == 0 && feed  %>
+        <div class="card border-dart ml-3" style="max-width: 22rem;">
+          <div class="card-header">
+            <div class="d-flex w-100 justify-content-between">
+              <%= feed.title %>
+              <%= button_to "Delete", feed_path(feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger btn-sm' %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title"><%= feed.link %></h4>
+            <p class="card-text"><%= feed.description %></p>
+          </div>
+        </div>
+      <% end %>
+      <% if index == 1 && feed  %>
+        <div class="card border-dart ml-4" style="max-width: 22rem;">
+          <div class="card-header">
+            <div class="d-flex w-100 justify-content-between">
+              <%= feed.title %>
+              <%= button_to "Delete", feed_path(feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger btn-sm' %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title"><%= feed.link %></h4>
+            <p class="card-text"><%= feed.description %></p>
+          </div>
+        </div>
+      <% end %>
+      <% if index == 2 && feed  %>
+        <div class="card border-dart ml-4" style="max-width: 22rem;">
+          <div class="card-header">
+            <div class="d-flex w-100 justify-content-between">
+              <%= feed.title %>
+              <%= button_to "Delete", feed_path(feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger btn-sm' %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title"><%= feed.link %></h4>
+            <p class="card-text"><%= feed.description %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+<%= paginate @feeds %>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :items, only: [:index, :show, :destroy]
   resources :comments, only: [:show, :create, :destroy]
   resources :recommended_feeds, only: [:index, :create]
+  resources :users, only: [:show]
   get '/search', to: 'search#index'
 
   devise_for :users, controllers: { sessions:'users/sessions' }, path: '', path_names: { sign_in: 'login', sign_out: 'logout' }
