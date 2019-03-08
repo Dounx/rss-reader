@@ -14,7 +14,8 @@ Sidekiq::Stats.new.reset
 User.create(
     :email                 => "imdounx@gmail.com",
     :password              => "123456",
-    :password_confirmation => "123456"
+    :password_confirmation => "123456",
+    :admin                 => true
 )
 
 100.times do

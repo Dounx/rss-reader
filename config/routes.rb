@@ -1,4 +1,15 @@
 Rails.application.routes.draw do
+  namespace :admin do
+      resources :users
+      resources :comments
+      resources :feeds
+      resources :items
+      resources :item_states
+      resources :recommended_feeds
+      resources :subscriptions
+
+      root to: "users#index"
+    end
   root to: "home#index"
   resources :feeds
   resources :items, only: [:index, :show, :destroy]

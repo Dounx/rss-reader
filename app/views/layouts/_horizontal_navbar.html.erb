@@ -49,9 +49,12 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.email %></a>
             <div class="dropdown-menu">
-              <%= link_to 'Your profile', user_path(current_user), :class => 'dropdown-item' %>
+              <%= link_to 'Your Profile', user_path(current_user), :class => 'dropdown-item' %>
               <a class="dropdown-item" href="/feeds">Your Feeds</a>
               <a class="dropdown-item" href="/items">Your Items</a>
+              <% if current_user.admin %>
+                <a class="dropdown-item" href="/admin">Admin Dashboard</a>
+              <% end %>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Help</a>
               <%= link_to 'Settings', edit_user_path(current_user), :class => 'dropdown-item' %>
