@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :recommended_feeds
   root to: "home#index"
   resources :feeds
   resources :items, only: [:index, :show, :destroy]
   resources :comments, only: [:show, :create, :destroy]
+  resources :recommended_feeds, only: [:index, :create]
   get '/search', to: 'search#index'
 
   devise_for :users, controllers: { sessions:'users/sessions' }, path: '', path_names: { sign_in: 'login', sign_out: 'logout' }

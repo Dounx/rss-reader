@@ -1,31 +1,61 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Recommended Feeds</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Link</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @recommended_feeds.each do |recommended_feed| %>
-      <tr>
-        <td><%= recommended_feed.title %></td>
-        <td><%= recommended_feed.description %></td>
-        <td><%= recommended_feed.link %></td>
-        <td><%= link_to 'Show', recommended_feed %></td>
-        <td><%= link_to 'Edit', edit_recommended_feed_path(recommended_feed) %></td>
-        <td><%= link_to 'Destroy', recommended_feed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<% @recommended_feeds.in_groups_of(3) do |row| %>
+  <div class="row mb-4">
+    <% row.each_with_index do |recommended_feed, index| %>
+      <% if index == 0 && recommended_feed  %>
+        <div class="card border-dart ml-3" style="max-width: 22rem;">
+          <div class="card-header">
+            <div class="d-flex w-100 justify-content-between">
+              <%= recommended_feed.title %>
+              <% if current_user.feeds.find_by(link: recommended_feed.link) %>
+                <%= button_to 'Has been subscribed', { action: 'create', link: recommended_feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
+              <% else %>
+                <%= button_to 'Subscribe', { action: 'create', link: recommended_feed.link }, :class => 'btn btn-outline-primary btn-sm' %>
+              <% end %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title"><%= recommended_feed.link %></h4>
+            <p class="card-text"><%= recommended_feed.description %></p>
+          </div>
+        </div>
+      <% end %>
+      <% if index == 1 && recommended_feed  %>
+        <div class="card border-dart ml-4" style="max-width: 22rem;">
+          <div class="card-header">
+            <div class="d-flex w-100 justify-content-between">
+              <%= recommended_feed.title %>
+              <% if current_user.feeds.find_by(link: recommended_feed.link) %>
+                <%= button_to 'Has been subscribed', { action: 'create', link: recommended_feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
+              <% else %>
+                <%= button_to 'Subscribe', { action: 'create', link: recommended_feed.link }, :class => 'btn btn-outline-primary btn-sm' %>
+              <% end %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title"><%= recommended_feed.link %></h4>
+            <p class="card-text"><%= recommended_feed.description %></p>
+          </div>
+        </div>
+      <% end %>
+      <% if index == 2 && recommended_feed  %>
+        <div class="card border-dart ml-4" style="max-width: 22rem;">
+          <div class="card-header">
+            <div class="d-flex w-100 justify-content-between">
+              <%= recommended_feed.title %>
+              <% if current_user.feeds.find_by(link: recommended_feed.link) %>
+                <%= button_to 'Has been subscribed', { action: 'create', link: recommended_feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
+              <% else %>
+                <%= button_to 'Subscribe', { action: 'create', link: recommended_feed.link }, :class => 'btn btn-outline-primary btn-sm' %>
+              <% end %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h4 class="card-title"><%= recommended_feed.link %></h4>
+            <p class="card-text"><%= recommended_feed.description %></p>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Recommended Feed', new_recommended_feed_path %>
+  </div>
+<% end %>
+<%= paginate @recommended_feeds %>

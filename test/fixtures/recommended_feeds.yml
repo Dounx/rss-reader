@@ -3,9 +3,9 @@
 one:
   title: MyString
   description: MyText
-  link: MyString
+  link: https://www.microsoft.com
 
 two:
   title: MyString
   description: MyText
-  link: MyString
+  link: https://www.google.com

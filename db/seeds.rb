@@ -44,6 +44,7 @@ links = %w(https://www.ithome.com/rss/
 
 links.each do |link|
   Feed.create(link: link)
+  RecommendedFeed.create(title: 'test', link: link, description: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest')
 end
 
 Feed.all.each do |feed|
