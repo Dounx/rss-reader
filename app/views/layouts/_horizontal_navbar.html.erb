@@ -37,7 +37,11 @@
           </li>
           <li class="nav-item">
             <% if controller_name == 'items' && action_name == 'show' %>
-              <%= button_to "Delete", item_path(@item.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-danger' %>
+              <% if @next_item %>
+                <%= button_to "Next", item_path(@next_item.id), method: :get, :class => 'btn btn-primary' %>
+              <% else %>
+                <%= link_to "Items", items_path, :class => 'nav-link' %>
+              <% end %>
             <% else %>
               <%= link_to "Items", items_path, :class => 'nav-link' %>
             <% end %>

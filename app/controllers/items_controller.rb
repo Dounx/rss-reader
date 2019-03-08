@@ -26,5 +26,6 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
+      @next_item = Item.where('id > ?', @item.id).first
     end
 end
