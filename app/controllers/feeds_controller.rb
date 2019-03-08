@@ -37,7 +37,7 @@ class FeedsController < ApplicationController
 
   # DELETE /feeds/1
   def destroy
-    Subscription.find_by(feed_id: @feed.id)&.destroy
+    Subscription.find_by(feed_id: @feed.id, user_id: current_user.id)&.destroy
     respond_to do |format|
       format.html { redirect_to user_url(current_user), notice: 'Feed was successfully destroyed.' }
     end
