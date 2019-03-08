@@ -31,7 +31,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Feed.count') do
       post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
     end
-    assert_redirected_to feeds_url
+    assert_redirected_to user_url(@user)
   end
 
   test "should destroy feed if login" do
@@ -40,7 +40,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
       delete feed_url(@feed)
     end
 
-    assert_redirected_to feeds_url
+    assert_redirected_to user_url(@user)
   end
 
   test "should not get index if not login" do
