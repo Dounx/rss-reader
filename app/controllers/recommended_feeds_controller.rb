@@ -6,7 +6,6 @@ class RecommendedFeedsController < ApplicationController
   end
 
   # POST /recommended_feeds
-  # POST /recommended_feeds.json
   def create
     feed = Feed.find_or_create_by(link: params[:link])
     subscription = Subscription.new(user_id: current_user.id, feed_id: feed.id)

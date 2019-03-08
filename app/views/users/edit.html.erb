@@ -1,0 +1,35 @@
+ <%= form_for @user, url: {action: 'update'} do |f| %>
+  <fieldset>
+    <div class="form-group mt-2">
+      <label for="Email">Email address</label>
+      <%= f.text_field :email, :class => 'form-control', :placeholder => @user.email, :disabled => true %>
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="InputPassword">Change Password</label>
+      <%= f.password_field :password, :class => 'form-control', :placeholder => 'Password' %>
+    </div>
+    <div class="form-group">
+      <label for="ConfirmPassword">Confirm Password</label>
+      <%= f.password_field :password_confirmation, :class => 'form-control', :placeholder => 'Confirm password' %>
+    </div>
+    <% if false %>
+    <fieldset class="form-group">
+      <legend>Languages</legend>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Chinese
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+          English
+        </label>
+      </div>
+    </fieldset>
+    <% end %>
+    <%= f.submit 'Submit', :class => 'btn btn-primary' %>
+  </fieldset>
+<% end %>

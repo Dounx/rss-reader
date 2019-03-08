@@ -61,12 +61,6 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
-  test "should not get edit if not login" do
-    get edit_feed_url(@feed)
-    assert_response :found
-    assert_redirected_to new_user_session_path
-  end
-
   test "should not create feed if not login" do
     assert_no_difference('Feed.count') do
       post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }

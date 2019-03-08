@@ -28,7 +28,7 @@
             <%= submit_tag("Search", :class => 'btn nav-link') %>
           <% end %>
           <li class="nav-item">
-            <% if controller_name == 'users' %>
+            <% if controller_name == 'users' && action_name == 'show' %>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-feed" >Add</button>
                 <%= render 'feeds/new_feed_modal' %>
             <% else %>
@@ -54,7 +54,7 @@
               <a class="dropdown-item" href="/items">Your Items</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">Help</a>
-              <a class="dropdown-item" href="#">Settings</a>
+              <%= link_to 'Settings', edit_user_path(current_user), :class => 'dropdown-item' %>
               <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'dropdown-item' %>
             </div>
           </li>
