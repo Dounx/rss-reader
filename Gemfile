@@ -33,6 +33,8 @@ gem 'capistrano-rails', '~> 1.4.0', group: :development
 gem 'capistrano-rvm', '~> 0.1.2', group: :development
 gem 'capistrano-bundler', '~> 1.5.0', group: :development
 gem 'capistrano-passenger', '~> 0.2.0', group: :development
+gem 'ed25519', '~> 1.2.4', group: :development
+
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

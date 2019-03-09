@@ -118,6 +118,7 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    ed25519 (1.2.4)
     erubi (1.8.0)
     et-orbi (1.1.7)
       tzinfo
@@ -309,6 +310,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise (~> 4.6.1)
+  ed25519 (~> 1.2.4)
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3.3)
   kaminari (~> 1.1.1)
