@@ -65,7 +65,7 @@ domain = 'app.dounx.me'
 
 server domain, user: user, roles: %w{app db web}
 
-set :rvm_type, :user
+set :rvm_path, '/usr/local/rvm'
 set :rvm_ruby_string, 'ruby-2.6.0'
 
 set :application, 'RSSReader'
