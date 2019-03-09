@@ -63,15 +63,11 @@
 user = 'app'
 domain = 'app.dounx.me'
 
+server domain, user: user, roles: %w{app db web}
+
 set :rvm_type, :user
 set :rvm_ruby_string, 'ruby-2.6.0'
 
 set :application, 'RSSReader'
 set :repo_url, "#{user}@#{domain}:git/#{fetch(:application)}.git"
 set :deploy_to, "/var/www/#{fetch(:application)}"
-
-role :app, domain
-role :web, domain
-role :db, domain
-
-
