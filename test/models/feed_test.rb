@@ -27,9 +27,21 @@ class FeedTest < ActiveSupport::TestCase
     assert_equal @feed.save, false
   end
 
-  test "should not add a feed if link is not unique" do
-    assert_no_difference'Feed.count' do
-      Feed.create(link: @feed.link, modified_at: @feed.modified_at)
+  test "should fetch a feed" do
+    assert_difference 'Feed.count' do
+      Feed.fetch("http://songshuhui.net/feed")
+    end
+  end
+
+  test "should not fetch a feed if link is same" do
+    assert_no_difference 'Feed.count' do
+      Feed.fetch(@feed.link)
+    end
+  end
+
+  test "should not add a feed if title is same" do
+    assert_no_difference 'Feed.count' do
+      Feed.fetch('https://www.ithome.com/rss')
     end
   end
 end

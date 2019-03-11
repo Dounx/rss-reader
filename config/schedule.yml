@@ -2,3 +2,8 @@ refresh_feeds:
   cron: "0 * * * *"
   class: "RefreshFeedsWorker"
   queue: default
+
+clean_feeds:
+  cron: "0 * * * *"
+  class: "CleanFeedsWorker"
+  queue: default

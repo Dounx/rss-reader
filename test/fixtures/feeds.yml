@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  title: IT之家
+  link: https://www.ithome.com/rss/
+  description: MyString2
+  language: MyString2
+  modified_at: 1/1/2000
+
+two:
   title: MyString1
   link: https://www.google.com
   description: MyString1
   language: MyString1
-  modified_at: 1/1/2000
-
-two:
-  title: MyString2
-  link: https://www.microsoft.com
-  description: MyString2
-  language: MyString2
   modified_at: 1/1/2000

@@ -8,7 +8,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/1
   def show
-    @items = Feed.find(params[:id]).items.order(created_at: :desc).page params[:page]
+    @items = @feed.items.order(created_at: :desc).page params[:page]
   end
 
   # GET /feeds/new
@@ -18,13 +18,12 @@ class FeedsController < ApplicationController
 
   # POST /feeds
   def create
-    @feed = Feed.find_by(link: feed_params[:link]) || Feed.new(link: feed_params[:link])
-    if @feed.save
-      subscription = Subscription.find_by(user_id: current_user.id, feed_id: @feed.id)
+    @feed = Feed.fetch(feed_params[:link])
+    unless @feed.nil?
+
+      subscription = @feed.subscribe(current_user.id)
       respond_to do |format|
-        if subscription.nil?
-          Subscription.create(user_id: current_user.id, feed_id: @feed.id)
-          AddFeedWorker.perform_async(@feed.link)
+        unless subscription.nil?
           format.html { redirect_to user_url(current_user), notice: 'The feed will update after a few minutes.' }
         else
           format.html { redirect_to user_url(current_user), alert: 'Please add a different feed.'  }
@@ -37,11 +36,10 @@ class FeedsController < ApplicationController
 
   # DELETE /feeds/1
   def destroy
-    Subscription.find_by(feed_id: @feed.id, user_id: current_user.id)&.destroy
+    @feed.unsubscribe(current_user.id)
     respond_to do |format|
       format.html { redirect_to user_url(current_user), notice: 'Feed was successfully destroyed.' }
     end
-    CleanFeedsWorker.perform_async
   end
 
   private

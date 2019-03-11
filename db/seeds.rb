@@ -44,17 +44,16 @@ links = %w(https://www.ithome.com/rss/
            )
 
 links.each do |link|
-  Feed.create(link: link)
+  Feed.fetch(link)
   RecommendedFeed.create(title: 'test', link: link, description: 'testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest')
 end
 
 Feed.all.each do |feed|
   User.all.each do |user|
-    Subscription.create(
-        :user_id => user.id,
-        :feed_id => feed.id
-    )
+    Subscription.create(user_id: user.id, feed_id: feed.id, updated_at: '1990/1/1')
   end
 end
 
-RefreshFeedsWorker.perform_async
+Feed.all.each do |feed|
+  PublishItemsWorker.perform_async(feed.id)
+end

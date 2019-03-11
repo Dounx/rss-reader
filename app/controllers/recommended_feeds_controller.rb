@@ -7,15 +7,10 @@ class RecommendedFeedsController < ApplicationController
 
   # POST /recommended_feeds
   def create
-    feed = Feed.find_or_create_by(link: params[:link])
-    subscription = Subscription.new(user_id: current_user.id, feed_id: feed.id)
-    AddFeedWorker.perform_async(feed.link)
+    feed = Feed.find_by(link: params[:link]) || Feed.fetch(params[:link])
+    feed.subscribe(current_user.id)
     respond_to do |format|
-      if subscription.save
-        format.html { redirect_to recommended_feeds_url, notice: 'Recommended feed was successfully subscribed.' }
-      else
-        format.html { redirect_to recommended_feeds_url, alert: 'Recommended feed was not subscribed.' }
-      end
+      format.html { redirect_to recommended_feeds_url, notice: 'Recommended feed was successfully subscribed.' }
     end
   end
 

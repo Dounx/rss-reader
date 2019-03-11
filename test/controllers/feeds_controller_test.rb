@@ -29,7 +29,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
   test "should create feed if login" do
     sign_in @user
     assert_difference('Feed.count') do
-      post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
+      post feeds_url, params: { feed: {link: 'http://songshuhui.net/feed' } }
     end
     assert_redirected_to user_url(@user)
   end
@@ -63,7 +63,7 @@ class FeedsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create feed if not login" do
     assert_no_difference('Feed.count') do
-      post feeds_url, params: { feed: {link: 'https://www.ithome.com/rss/' } }
+      post feeds_url, params: { feed: {link: 'http://songshuhui.net/feed' } }
       assert_response :found
     end
     assert_redirected_to new_user_session_path

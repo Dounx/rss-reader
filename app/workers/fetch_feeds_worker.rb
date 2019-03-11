@@ -1,7 +1,7 @@
-class CleanFeedsWorker
+class FetchFeedsWorker
   include Sidekiq::Worker
 
   def perform(*args)
-    Feed.clean
+    Feed.fetch(args.first)
   end
 end
