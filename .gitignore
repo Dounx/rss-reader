@@ -32,3 +32,6 @@
 
 # Ignore Rubymine config file.
 /.idea/*
+
+config/database.yml
+config/secrets.yml

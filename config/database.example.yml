@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  reconnect: true
+  pool: 25
+  username: your name
+  password: your passwrod
+  host: localhost
+
+development:
+  <<: *default
+  database: rssreader_dev
+
+test:
+  <<: *default
+  database: rssreader_test
+
+
+production:
+  <<: *default
+  database: rssreader
