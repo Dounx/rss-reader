@@ -9,6 +9,7 @@ class Feed < ApplicationRecord
   validates :link, :format => URI::regexp(%w(http https)), uniqueness: {scope: :title, message: "should have only one unique feed"}
 
   def Feed.fetch(link)
+    link.strip!
     begin
       open(link, :allow_redirections => :all) do |rss|
         feed = RSS::Parser.parse(rss)
