@@ -30,6 +30,8 @@ class UserDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :id,
+    :email,
     :subscriptions,
     :item_states,
     :comments,
@@ -39,36 +41,22 @@ class UserDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
+      :id,
+      :email,
+      :created_at,
+      :updated_at,
+      :admin,
     :subscriptions,
     :item_states,
     :comments,
-    :feeds,
-    :items,
-    :id,
-    :email,
-    :encrypted_password,
-    :reset_password_token,
-    :reset_password_sent_at,
-    :remember_created_at,
-    :created_at,
-    :updated_at,
-    :admin,
+    :feeds
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :subscriptions,
-    :item_states,
-    :comments,
-    :feeds,
-    :items,
     :email,
-    :encrypted_password,
-    :reset_password_token,
-    :reset_password_sent_at,
-    :remember_created_at,
     :admin,
   ].freeze
 

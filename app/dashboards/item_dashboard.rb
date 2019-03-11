@@ -25,10 +25,10 @@ class ItemDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :feed,
-    :item_states,
-    :comments,
     :id,
+    :feed,
+    :comments,
+    :created_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -50,8 +50,6 @@ class ItemDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :feed,
-    :item_states,
-    :comments,
     :title,
     :link,
     :description,
