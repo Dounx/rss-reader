@@ -12,19 +12,23 @@ class Feed < ApplicationRecord
     begin
       open(link, :allow_redirections => :all) do |rss|
         feed = RSS::Parser.parse(rss)
-        feed_cursor = Feed.find_or_create_by!(link: link)
+        unless Feed.find_by(title: feed.channel.title)
+          feed_cursor = Feed.find_or_create_by(link: link)
 
-        feed.items.each do |item|
-          feed_cursor.items.create(title: item.title,
-                                   link: item.link,
-                                   description: item.description,
-                                   created_at: item.date)
+          feed.items.each do |item|
+            feed_cursor.items.create(title: item.title,
+                                     link: item.link,
+                                     description: item.description,
+                                     created_at: item.date)
+          end
+          feed_cursor.update(title: feed.channel.title,
+                             description: feed.channel.description,
+                             language: feed.channel.language,
+                             modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
+          feed_cursor
+        else
+          'Same title'
         end
-        feed_cursor.update!(title: feed.channel.title,
-                           description: feed.channel.description,
-                           language: feed.channel.language,
-                           modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
-        feed_cursor
       end
     rescue OpenURI::HTTPError => ex
       if ex.message == '304 Not Modified'
@@ -38,8 +42,6 @@ class Feed < ApplicationRecord
       puts ex.message
     rescue => ex
       puts ex.message
-      feed = Feed.find_by_link(link)
-      feed.destroy if feed && feed.title.nil?
     end
   end
 
@@ -108,7 +110,7 @@ class Feed < ApplicationRecord
         last_updated_at = subscription.updated_at
         subscription.update(updated_at: DateTime.now)
         items.each do |item|
-          item.item_states.create(user_id: user.id) if item.created_at > last_updated_at
+          item.item_states.create(user_id: user.id) if item.updated_at > last_updated_at # must be updated_at not crated_at(item.date)
         end
       end
     end

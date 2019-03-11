@@ -41,8 +41,6 @@ gem 'bcrypt_pbkdf', '~> 1.0.0', group: :development
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'sqlite3', '~> 1.3.13'
-
 gem 'sidekiq', '~> 5.2.5'
 
 gem "sidekiq-cron", "~> 1.1"
@@ -58,6 +56,8 @@ gem 'kaminari', '~> 1.1.1'
 gem 'open_uri_redirections', '~> 0.2.1'
 
 gem "administrate", '~> 0.11.0'
+
+gem 'mysql2', '~> 0.5.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -79,10 +79,6 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
-end
-
-group :production do
-  gem 'mysql2', '~> 0.5.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

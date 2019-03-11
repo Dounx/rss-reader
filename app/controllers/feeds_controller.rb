@@ -20,13 +20,16 @@ class FeedsController < ApplicationController
   def create
     @feed = Feed.fetch(feed_params[:link])
     unless @feed.nil?
-
-      subscription = @feed.subscribe(current_user.id)
-      respond_to do |format|
-        unless subscription.nil?
-          format.html { redirect_to user_url(current_user), notice: 'The feed will update after a few minutes.' }
-        else
-          format.html { redirect_to user_url(current_user), alert: 'Please add a different feed.'  }
+      if @feed == 'Same title'
+        redirect_to user_url(current_user), alert: 'Please add a different feed.'
+      else
+        subscription = @feed.subscribe(current_user.id)
+        respond_to do |format|
+          unless subscription.nil?
+            format.html { redirect_to user_url(current_user), notice: 'The feed will update after a few minutes.' }
+          else
+            format.html { redirect_to user_url(current_user), alert: 'Please add a different feed.'  }
+          end
         end
       end
     else

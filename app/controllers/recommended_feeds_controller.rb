@@ -8,10 +8,17 @@ class RecommendedFeedsController < ApplicationController
   # POST /recommended_feeds
   def create
     feed = Feed.find_by(link: params[:link]) || Feed.fetch(params[:link])
-    feed.subscribe(current_user.id)
-    respond_to do |format|
-      format.html { redirect_to recommended_feeds_url, notice: 'Recommended feed was successfully subscribed.' }
+    if feed
+      feed.subscribe(current_user.id)
+      respond_to do |format|
+        format.html { redirect_to recommended_feeds_url, notice: 'Recommended feed was successfully subscribed.' }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to recommended_feeds_url, alert: 'This recommended feed has been broken.' }
+      end
     end
+
   end
 
 
