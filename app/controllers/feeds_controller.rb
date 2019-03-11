@@ -22,6 +22,9 @@ class FeedsController < ApplicationController
     unless @feed.nil?
       if @feed == 'Same title'
         redirect_to user_url(current_user), alert: 'Please add a different feed.'
+      elsif @feed == 'Should subscribe'
+        @feed = Feed.find_by(link, feed_params[:link])
+        @feed.subscribe(current_user.id)
       else
         subscription = @feed.subscribe(current_user.id)
         respond_to do |format|

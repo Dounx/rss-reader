@@ -27,7 +27,12 @@ class Feed < ApplicationRecord
                              modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
           feed_cursor
         else
-          'Same title'
+          feed = Feed.find_by(link: link)
+          if feed
+            'Should subscribe'
+          else
+            'Same title'
+          end
         end
       end
     rescue OpenURI::HTTPError => ex
