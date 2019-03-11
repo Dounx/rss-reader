@@ -28,6 +28,7 @@ class FeedDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :id,
+    :title,
     :items,
     :subscriptions,
     :users,
