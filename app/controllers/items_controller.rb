@@ -16,10 +16,7 @@ class ItemsController < ApplicationController
   def destroy
     item_state = ItemState.find_by(user_id: current_user.id, item_id: params[:id])
     item_state.destroy
-
-    respond_to do |format|
-      format.html { redirect_to items_url, notice: 'Item was successfully destroyed.' }
-    end
+    redirect_to items_url, notice: 'Item was successfully destroyed'
   end
 
   private

@@ -18,35 +18,37 @@ class FeedsController < ApplicationController
 
   # POST /feeds
   def create
-    @feed = Feed.fetch(feed_params[:link])
-    unless @feed.nil?
-      if @feed == 'Same title'
-        redirect_to user_url(current_user), alert: 'Please add a different feed.'
-      elsif @feed == 'Should subscribe'
-        @feed = Feed.find_by(link: feed_params[:link])
-        @feed.subscribe(current_user.id)
-        redirect_to user_url(current_user), notice: 'Find a same feed, it will appear soon.'
-      else
-        subscription = @feed.subscribe(current_user.id)
-        respond_to do |format|
-          unless subscription.nil?
-            format.html { redirect_to user_url(current_user), notice: 'The feed will update after a few minutes.' }
-          else
-            format.html { redirect_to user_url(current_user), alert: 'Please add a different feed.'  }
-          end
-        end
-      end
-    else
-      redirect_to user_url(current_user), alert: 'Please add a correct url.'
+    fetch_status = Feed.fetch(feed_params[:link])
+    feed = Feed.find_by_link(feed_params[:link])
+    feed.subscribe(current_user.id)
+
+    if fetch_status == Feed::FetchStatus[:Success]
+      redirect_to user_url(current_user), notice: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:NotFound]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:HTTPError]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:ENOENT]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:SocketError]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:NotWellFormedError]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:TooMuchTagError]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:NotAvailableValueError]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:MissingTagError]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:FeedExistedError]
+      redirect_to user_url(current_user), alert: fetch_status
     end
   end
 
   # DELETE /feeds/1
   def destroy
     @feed.unsubscribe(current_user.id)
-    respond_to do |format|
-      format.html { redirect_to user_url(current_user), notice: 'Feed was successfully destroyed.' }
-    end
+    redirect_to user_url(current_user), notice: 'Feed was successfully destroyed'
   end
 
   private

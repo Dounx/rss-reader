@@ -11,23 +11,19 @@ class CommentsController < ApplicationController
     @comment.user_id = params[:user_id]
     @comment.item_id = params[:item_id]
 
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to url_for(@comment.item) + '#footer', notice: 'Comment was successfully created.' }
-      else
-        format.html { redirect_to url_for(@comment.item) + '#footer', alert: 'Please input some words.' }
-      end
+    if @comment.save
+      redirect_to url_for(@comment.item) + '#footer', notice: 'Comment was successfully created'
+    else
+      redirect_to url_for(@comment.item) + '#footer', alert: 'Please input some words'
     end
+
   end
 
   # DELETE /comments/1
   def destroy
     item = @comment.item
     @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to url_for(item_url(item)) + '#footer', notice: 'Comment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to url_for(item_url(item)) + '#footer', notice: 'Comment was successfully destroyed'
   end
 
   private
