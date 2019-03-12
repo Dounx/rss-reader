@@ -19,10 +19,10 @@ class FeedsController < ApplicationController
   # POST /feeds
   def create
     fetch_status = Feed.fetch(feed_params[:link])
-    feed = Feed.find_by_link(feed_params[:link])
-    feed.subscribe(current_user.id)
 
-    if fetch_status == Feed::FetchStatus[:Success]
+    if fetch_status == Feed::FetchStatus[:Success] || fetch_status == Feed::FetchStatus[:FeedExistedError]
+      feed = Feed.find_by_link(feed_params[:link])
+      feed.subscribe(current_user.id)
       redirect_to user_url(current_user), notice: fetch_status
     elsif fetch_status == Feed::FetchStatus[:NotFound]
       redirect_to user_url(current_user), alert: fetch_status
@@ -40,7 +40,13 @@ class FeedsController < ApplicationController
       redirect_to user_url(current_user), alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:MissingTagError]
       redirect_to user_url(current_user), alert: fetch_status
-    elsif fetch_status == Feed::FetchStatus[:FeedExistedError]
+    elsif fetch_status == Feed::FetchStatus[:ECONNRESET]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:ETIMEDOUT]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:OpenTimeout]
+      redirect_to user_url(current_user), alert: fetch_status
+    elsif fetch_status == Feed::FetchStatus[:ECONNREFUSED]
       redirect_to user_url(current_user), alert: fetch_status
     end
   end

@@ -19,7 +19,11 @@ class Feed < ApplicationRecord
       TooMuchTagError: 'This XML has too much tag errors',
       NotAvailableValueError: 'This XML has some value errors',
       MissingTagError: 'Tag is missing in some tag',
-      FeedExistedError: 'Feed existed'
+      FeedExistedError: 'Feed existed',
+      ECONNRESET: 'Connection reset by peer',
+      ETIMEDOUT: 'SSL connection timeout',
+      OpenTimeout: 'Execution expired',
+      ECONNREFUSED: 'Connection refused'
   }
 
   def Feed.fetch(link)
@@ -51,6 +55,14 @@ class Feed < ApplicationRecord
       else
         FetchStatus[:ENOENT]
       end
+    rescue Errno::ECONNRESET => ex
+      FetchStatus[:ECONNRESET]
+    rescue Errno::ETIMEDOUT => ex
+      FetchStatus[:ETIMEDOUT]
+    rescue Errno::ECONNREFUSED => ex
+      FetchStatus[:ECONNREFUSED]
+    rescue Net::OpenTimeout => ex
+      FetchStatus[:OpenTimeout]
     rescue SocketError => ex
       FetchStatus[:SocketError]
     rescue RSS::NotWellFormedError => ex
@@ -144,17 +156,20 @@ class Feed < ApplicationRecord
     end
 
     # try parse feed's title, link and description
+    feed_cursor.link = link
     if feed.methods.include?(:channel) && feed.channel
       feed_cursor.title = feed.channel.title.strip
-      feed_cursor.link = feed.channel.link.strip
+      # feed_cursor.link = feed.channel.link.strip
       feed_cursor.description = feed.channel.description.strip
     else
       feed_cursor.title = feed.title.content.strip if feed.methods.include?(:title) && feed.title&.content
-      feed_cursor.link = feed.link.href.strip
+      # feed_cursor.link = feed.link.href.strip
       feed_cursor.description = feed.subtitle.content.strip if feed.methods.include?(:subtitle) && feed.subtitle&.content
     end
 
-    unless feed_cursor.save
+    begin
+      feed_cursor.save
+    rescue
       raise FetchStatus[:FeedExistedError]
     end
 
