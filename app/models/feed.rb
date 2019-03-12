@@ -25,7 +25,7 @@ class Feed < ApplicationRecord
           feed_cursor.update(title: feed.channel.title,
                              description: feed.channel.description,
                              language: feed.channel.language,
-                             modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
+                             modified_at: rss.last_modified || feed.channel.lastBuildDate || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
           feed_cursor
         else
           feed = Feed.find_by(link: link)
@@ -65,7 +65,7 @@ class Feed < ApplicationRecord
           feed_cursor.update(title: feed.channel.title,
                              description: feed.channel.description,
                              language: feed.channel.language,
-                             modified_at: rss.last_modified || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
+                             modified_at: rss.last_modified || feed.channel.lastBuildDate || feed_cursor.items&.order(created_at: :desc)&.first&.created_at)
         end
       rescue OpenURI::HTTPError => ex
         if ex.message == '304 Not Modified'
