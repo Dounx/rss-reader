@@ -7,7 +7,7 @@ class RecommendedFeedsController < ApplicationController
 
   # POST /recommended_feeds
   def create
-    if Feed.fetch(params[:link]) == Feed::FetchStatus[:Success]
+    if FetchFeedsWorker.new.perform(params[:link]) == Feed::FetchStatus[:Success]
       feed = Feed.find_by_link(params[:link])
       feed.subscribe(current_user.id)
       redirect_to recommended_feeds_url, notice: 'Recommended feed was successfully subscribed'

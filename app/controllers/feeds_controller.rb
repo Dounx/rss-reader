@@ -19,7 +19,7 @@ class FeedsController < ApplicationController
 
   # POST /feeds
   def create
-    fetch_status = Feed.fetch(feed_params[:link])
+    fetch_status = FetchFeedsWorker.new.perform(feed_params[:link])
 
     last_url = request.referrer
     if fetch_status == Feed::FetchStatus[:Success] || fetch_status == Feed::FetchStatus[:FeedExistedError]
