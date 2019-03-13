@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 2019_03_11_070810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "modified_at"
-    t.index ["link"], name: "index_feeds_on_link", unique: true
-    t.index ["title"], name: "index_feeds_on_title", unique: true
+    t.index ["link"], name: "index_feeds_on_link", unique: true, length: 100
+    t.index ["title"], name: "index_feeds_on_title", unique: true, length: 100
   end
 
   create_table "item_states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2019_03_11_070810) do
     t.datetime "updated_at", null: false
     t.bigint "feed_id"
     t.index ["feed_id"], name: "index_items_on_feed_id"
-    t.index ["link"], name: "index_items_on_link", unique: true
+    t.index ["link"], name: "index_items_on_link", unique: true, length: 100
   end
 
   create_table "recommended_feeds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(version: 2019_03_11_070810) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, length: 100
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, length: 100
   end
 
   add_foreign_key "comments", "items"
