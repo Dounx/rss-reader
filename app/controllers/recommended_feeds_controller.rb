@@ -2,7 +2,7 @@ class RecommendedFeedsController < ApplicationController
 
   # GET /recommended_feeds
   def index
-    @recommended_feeds = RecommendedFeed.all.page params[:page]
+    @feeds = RecommendedFeed.all.page params[:page]
   end
 
   # POST /recommended_feeds

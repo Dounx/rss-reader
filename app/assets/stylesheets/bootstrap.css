@@ -4884,6 +4884,20 @@ input[type="button"].btn-block {
     border-bottom-left-radius: 0.25rem;
 }
 
+.card-group-item-action {
+    color: #495057;
+    text-align: inherit;
+}
+
+.card-group-item-action:hover, .card-group-item-action:focus {
+    color: #495057;
+    text-decoration: none;
+}
+
+.card-group-item-action:active {
+    color: #343a40;
+}
+
 .card-body {
     -webkit-box-flex: 1;
     -ms-flex: 1 1 auto;

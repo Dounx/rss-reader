@@ -160,11 +160,11 @@ class Feed < ApplicationRecord
     if feed.methods.include?(:channel) && feed.channel
       feed_cursor.title = feed.channel.title.strip
       # feed_cursor.link = feed.channel.link.strip
-      feed_cursor.description = feed.channel.description.strip
+      feed_cursor.description = feed.channel.description.strip.delete_suffix(' - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)') # for RSSHub
     else
       feed_cursor.title = feed.title.content.strip if feed.methods.include?(:title) && feed.title&.content
       # feed_cursor.link = feed.link.href.strip
-      feed_cursor.description = feed.subtitle.content.strip if feed.methods.include?(:subtitle) && feed.subtitle&.content
+      feed_cursor.description = feed.subtitle.content.strip.delete_suffix(' - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)') if feed.methods.include?(:subtitle) && feed.subtitle&.content # for RSSHub if feed.methods.include?(:subtitle) && feed.subtitle&.content
     end
 
     begin
