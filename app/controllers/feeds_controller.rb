@@ -9,6 +9,7 @@ class FeedsController < ApplicationController
   # GET /feeds/1
   def show
     @items = @feed.items.order(created_at: :desc).page params[:page]
+    session[:all_items] = true
   end
 
   # GET /feeds/new

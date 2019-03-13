@@ -4,10 +4,18 @@ class ItemsController < ApplicationController
   # GET /items
   def index
     @items = current_user.items.order(created_at: :desc).page params[:page]
+    session[:all_items] = false
   end
 
   # GET /items/1
   def show
+    if session[:all_items]
+      items = @item.feed.items.order(created_at: :desc)
+      @next_item = items[items.index(@item) + 1]
+    else
+      items = current_user.items.order(created_at: :desc)
+      @next_item = items[items.index(@item) + 1]
+    end
     @comments = @item.comments.order(created_at: :desc).page params[:page]
     @comment = Comment.new
   end
@@ -23,6 +31,5 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
-      @next_item = Item.where('id > ?', @item.id).first
     end
 end
