@@ -6,10 +6,10 @@
           <div class="card-header">
             <div class="d-flex w-100 justify-content-between text-nowrap">
               <%= link_to feed.link do %>
-                <%= truncate(feed.title, :length => 22, :separator => ' ') %>
+                <%= truncate(feed.title, :length => 16, :separator => ' ') %>
               <% end %>
               <% if current_user.feeds.find_by(link: feed.link) %>
-                <%= button_to 'Has been subscribed', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
+                <%= button_to 'Subscribed', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
               <% else %>
                 <%= button_to 'Subscribe', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm' %>
               <% end %>
@@ -25,10 +25,10 @@
           <div class="card-header">
             <div class="d-flex w-100 justify-content-between text-nowrap">
               <%= link_to feed.link do %>
-                <%= truncate(feed.title, :length => 22, :separator => ' ') %>
+                <%= truncate(feed.title, :length => 16, :separator => ' ') %>
               <% end %>
               <% if current_user.feeds.find_by(link: feed.link) %>
-                <%= button_to 'Has been subscribed', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
+                <%= button_to 'Subscribed', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
               <% else %>
                 <%= button_to 'Subscribe', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm' %>
               <% end %>
@@ -44,10 +44,10 @@
           <div class="card-header">
             <div class="d-flex w-100 justify-content-between text-nowrap">
               <%= link_to feed.link do %>
-                <%= truncate(feed.title, :length => 22, :separator => ' ') %>
+                <%= truncate(feed.title, :length => 16, :separator => ' ') %>
               <% end %>
               <% if current_user.feeds.find_by(link: feed.link) %>
-                <%= button_to 'Has been subscribed', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
+                <%= button_to 'Subscribed', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm', :disabled => true%>
               <% else %>
                 <%= button_to 'Subscribe', { action: 'create', link: feed.link }, :class => 'btn btn-outline-primary btn-sm' %>
               <% end %>

@@ -21,34 +21,35 @@ class FeedsController < ApplicationController
   def create
     fetch_status = Feed.fetch(feed_params[:link])
 
+    last_url = request.referrer
     if fetch_status == Feed::FetchStatus[:Success] || fetch_status == Feed::FetchStatus[:FeedExistedError]
       feed = Feed.find_by_link(feed_params[:link])
       feed.subscribe(current_user.id)
-      redirect_to user_url(current_user), notice: fetch_status
+      redirect_to last_url, notice: fetch_status
     elsif fetch_status == Feed::FetchStatus[:NotFound]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:HTTPError]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:ENOENT]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:SocketError]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:NotWellFormedError]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:TooMuchTagError]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:NotAvailableValueError]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:MissingTagError]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:ECONNRESET]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:ETIMEDOUT]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:OpenTimeout]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     elsif fetch_status == Feed::FetchStatus[:ECONNREFUSED]
-      redirect_to user_url(current_user), alert: fetch_status
+      redirect_to last_url, alert: fetch_status
     end
   end
 
