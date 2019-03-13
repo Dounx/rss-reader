@@ -2,51 +2,73 @@
   <div class="row mb-4">
     <% row.each_with_index do |feed, index| %>
       <% if index == 0 && feed  %>
-        <div class="card border-dart ml-3" style="width: 22rem; height: 16rem;">
+        <div class="card border-dart ml-3" style="width: 22.5rem; height: 16rem;">
           <div class="card-header">
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-100 justify-content-between text-nowrap">
               <%= link_to feed_path(feed) do %>
-                <%= feed.title %>
+                <%= truncate(feed.title, :length => 22, :separator => ' ') %>
               <% end %>
               <%= button_to "Delete", feed_path(feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger btn-sm card-btn' %>
             </div>
           </div>
           <div class="card-body">
-            <p class="card-text"><%= feed.description %></p>
+            <p class="card-text" style="height: 8rem;"><%= truncate(feed.description, :length => 160, :separator => ' ') %></p>
+            <div class="row align-bottom">
+              <div class="col text-nowrap">
+                <span class="badge badge-primary">Items: <%= feed.items.count %></span>
+                <span class="badge badge-success">Followed: <%= feed.subscriptions.count %></span>
+                <span class="badge badge-warning"><%= time_ago_in_words(feed.modified_at) %></span>
+              </div>
+            </div>
           </div>
         </div>
       <% end %>
       <% if index == 1 && feed  %>
-        <div class="card border-dart ml-3" style="width: 22rem; height: 16rem;">
+        <div class="card border-dart ml-3" style="width: 22.5rem; height: 16rem;">
           <div class="card-header">
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-100 justify-content-between text-nowrap">
               <%= link_to feed_path(feed) do %>
-                <%= feed.title %>
+                <%= truncate(feed.title, :length => 22, :separator => ' ') %>
               <% end %>
               <%= button_to "Delete", feed_path(feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger btn-sm card-btn' %>
             </div>
           </div>
           <div class="card-body">
-            <p class="card-text"><%= feed.description %></p>
+            <p class="card-text" style="height: 8rem;"><%= truncate(feed.description, :length => 160, :separator => ' ') %></p>
+            <div class="row align-bottom">
+              <div class="col text-nowrap">
+                <span class="badge badge-primary">Items: <%= feed.items.count %></span>
+                <span class="badge badge-success">Followed: <%= feed.subscriptions.count %></span>
+                <span class="badge badge-warning"><%= time_ago_in_words(feed.modified_at) %></span>
+              </div>
+            </div>
           </div>
         </div>
       <% end %>
       <% if index == 2 && feed  %>
-        <div class="card border-dart ml-3" style="width: 22rem; height: 16rem;">
+        <div class="card border-dart ml-3" style="width: 22.5rem; height: 16rem;">
           <div class="card-header">
-            <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex w-100 justify-content-between text-nowrap">
               <%= link_to feed_path(feed) do %>
-                <%= feed.title %>
+                <%= truncate(feed.title, :length => 22, :separator => ' ') %>
               <% end %>
               <%= button_to "Delete", feed_path(feed.id), data: { confirm: 'Sure?' }, :method => :delete, :class => 'btn btn-outline-danger btn-sm card-btn' %>
             </div>
           </div>
           <div class="card-body">
-            <p class="card-text"><%= feed.description %></p>
+            <p class="card-text" style="height: 8rem;"><%= truncate(feed.description, :length => 160, :separator => ' ') %></p>
+            <div class="row align-bottom">
+              <div class="col text-nowrap">
+                <span class="badge badge-primary">Items: <%= feed.items.count %></span>
+                <span class="badge badge-success">Followed: <%= feed.subscriptions.count %></span>
+                <span class="badge badge-warning"><%= time_ago_in_words(feed.modified_at) %></span>
+              </div>
+            </div>
           </div>
         </div>
       <% end %>
     <% end %>
   </div>
 <% end %>
+
 <%= paginate @feeds %>

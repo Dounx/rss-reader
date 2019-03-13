@@ -155,16 +155,19 @@ class Feed < ApplicationRecord
       feed_cursor.modified_at = DateTime.now  # In rails should be DateTime.now
     end
 
-    # try parse feed's title, link and description
+    # try parse feed's title, link, description and language
     feed_cursor.link = link
+    feed_cursor.language = 'Unknown'
     if feed.methods.include?(:channel) && feed.channel
       feed_cursor.title = feed.channel.title.strip
       # feed_cursor.link = feed.channel.link.strip
       feed_cursor.description = feed.channel.description.strip.delete_suffix(' - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)') # for RSSHub
+      feed_cursor.language = feed.channel.language if feed.methods.include?(:language) && feed.channel&.language
     else
       feed_cursor.title = feed.title.content.strip if feed.methods.include?(:title) && feed.title&.content
       # feed_cursor.link = feed.link.href.strip
       feed_cursor.description = feed.subtitle.content.strip.delete_suffix(' - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)') if feed.methods.include?(:subtitle) && feed.subtitle&.content # for RSSHub if feed.methods.include?(:subtitle) && feed.subtitle&.content
+      feed_cursor.language = feed.language.content.strip if feed.methods.include?(:language) && feed.language&.content
     end
 
     begin
