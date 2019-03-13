@@ -5,7 +5,7 @@
         <div class="card border-dart ml-3" style="width: 22rem; height: 16rem;">
           <div class="card-header">
             <div class="d-flex w-100 justify-content-between">
-              <%= link_to feed_path(feed) do %>
+              <%= link_to feed.link do %>
                 <%= feed.title %>
               <% end %>
               <% if current_user.feeds.find_by(link: feed.link) %>
@@ -24,7 +24,7 @@
         <div class="card border-dart ml-3" style="width: 22rem; height: 16rem;">
           <div class="card-header">
             <div class="d-flex w-100 justify-content-between">
-              <%= link_to feed_path(feed) do %>
+              <%= link_to feed.link do %>
                 <%= feed.title %>
               <% end %>
               <% if current_user.feeds.find_by(link: feed.link) %>
@@ -42,7 +42,7 @@
         <div class="card border-dart ml-3" style="width: 22rem; height: 16rem;">
           <div class="card-header">
             <div class="d-flex w-100 justify-content-between">
-              <%= link_to feed_path(feed) do %>
+              <%= link_to feed.link do %>
                 <%= feed.title %>
               <% end %>
               <% if current_user.feeds.find_by(link: feed.link) %>
