@@ -40,7 +40,7 @@ class FeedTest < ActiveSupport::TestCase
   end
 
   test "should not add a feed if title is same" do
-    assert_raise ActiveRecord::RecordNotUnique do
+    assert_no_difference 'Feed.count' do
       Feed.fetch('https://www.ithome.com/rss')
     end
   end

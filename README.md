@@ -5,19 +5,21 @@ It's a graduation project, using for RSS/ATOM Subscripting and reading.
 
 ## Requirements
 * ruby 2.6.0
-* bundler
+* bundler2
 * mysql
 
 ## Commands to run
-
+* gem update --system
+* gem install bundler
 * bundle install
-* SIDEKIQ_THREADS=5 bundle exec sidekiq // SIDEKIQ_THREADS depends your server
 * rails db:create
-* rails db:migrate  // rails db:setup 
+* rails db:migrate
+* rails db:seed // if you need seed data
 * rails server
+* SIDEKIQ_THREADS=5 bundle exec sidekiq // SIDEKIQ_THREADS depends your server
 
 ## Commands to deploy
-* after setting up yml and git, you can run:
+* after setting up database.yml, secrets.yml and git, you can run:
 * cap production deploy
 
 ## Some issues
