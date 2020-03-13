@@ -55,7 +55,7 @@ gem 'kaminari', '~> 1.1.1'
 
 gem 'open_uri_redirections', '~> 0.2.1'
 
-gem "administrate", '~> 0.11.0'
+gem "administrate", '~> 0.13.0'
 
 gem 'mysql2', '~> 0.5.2'
 
