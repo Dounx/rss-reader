@@ -51,7 +51,7 @@ gem 'bootstrap', '~> 4.3.1'
 
 gem 'jquery-rails', '~> 4.3.3'
 
-gem 'kaminari', '~> 1.1.1'
+gem 'kaminari', '~> 1.2.1'
 
 gem 'open_uri_redirections', '~> 0.2.1'
 
