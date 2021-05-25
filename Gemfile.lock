@@ -189,7 +189,7 @@ GEM
     puma (3.12.6)
     raabro (1.1.6)
     racc (1.5.2)
-    rack (2.2.2)
+    rack (2.2.3)
     rack-protection (2.0.5)
       rack
     rack-test (1.1.0)
