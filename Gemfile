@@ -41,7 +41,7 @@ gem 'bcrypt_pbkdf', '~> 1.0.0', group: :development
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'sidekiq', '~> 5.2.5'
+gem 'sidekiq', '~> 6.4.0'
 
 gem "sidekiq-cron", "~> 1.1"
 
